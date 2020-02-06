@@ -36,6 +36,32 @@ CREATE TABLE Concert
 PRIMARY KEY (Id)
 )
 
+CREATE TABLE Customer
+(
+[Id] INT IDENTITY(1,1) NOT NULL,
+[FirstName] NVARCHAR(20) NOT NULL,
+[LastName] NVARCHAR(20) NOT NULL,
+[Email] NVARCHAR(50) NOT NULL,
+[Pesetas] INT NOT NULL DEFAULT(0),
+PRIMARY KEY ([Id])
+)
+
+CREATE TABLE Ticket
+(
+[Id] INT IDENTITY(1,1) NOT NULL,
+[Concert_Id] INT FOREIGN KEY REFERENCES Concert([Id]),
+[Customer_Id] INT FOREIGN KEY REFERENCES Customer([Id]),
+[Price] INT NOT NULL,
+PRIMARY KEY ([Id])
+)
+
+CREATE TABLE TicketCupon
+(
+[Id] INT IDENTITY NOT NULL,
+[Ticket_Id] INT FOREIGN KEY REFERENCES Ticket ([Id]),
+PRIMARY KEY ([Id])
+)
+
 INSERT INTO Artist ([Name]) VALUES ('Queen');
 INSERT INTO Artist ([Name]) VALUES ('KISS');
 INSERT INTO Artist ([Name]) VALUES ('ABBA');
@@ -55,3 +81,9 @@ INSERT INTO Stage ([Name], [MaxVisitors]) VALUES ('Sticky Fingers', 530);
 INSERT INTO Concert ([Name], [Date], [City_Id], [Artist_Id], [Stage_Id]) VALUES ('Queen concert', GetDate(), 1, 1, 1);
 INSERT INTO Concert ([Name], [Date], [City_Id], [Artist_Id], [Stage_Id]) VALUES ('Abba concert', GetDate(), 3, 3, 1);
 INSERT INTO Concert ([Name], [Date], [City_Id], [Artist_Id], [Stage_Id]) VALUES ('Green Day concert', GetDate(), 4, 4, 1);
+
+SELECT a.Name, c.Name
+FROM Artist a
+INNER JOIN Concert ON Concert.Artist_Id = a.Id
+INNER JOIN City c ON Concert.City_Id = c.Id 
+WHERE a.Name = 'Abba'
