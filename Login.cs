@@ -22,7 +22,6 @@ namespace Piljetter
         private void btnLogin_Click(object sender, EventArgs e)
         {
             this.Close();
-            Program.LoggedIn = true;
             mf.SetLogout();
         }
     }

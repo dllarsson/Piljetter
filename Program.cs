@@ -8,7 +8,6 @@ namespace Piljetter
 {
     static class Program
     {
-        public static bool LoggedIn = false;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
