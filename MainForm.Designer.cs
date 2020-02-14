@@ -41,12 +41,15 @@
             this.lblSignedIn = new System.Windows.Forms.Label();
             this.tabUsers = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.listViewUsers = new System.Windows.Forms.ListView();
-            this.firstNameCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.lastNameCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.emailCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.HName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Artist = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.price = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.pesetasCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnAddConcert = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tabUsers.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -76,14 +79,14 @@
             // loginToolStripMenuItem
             // 
             this.loginToolStripMenuItem.Name = "loginToolStripMenuItem";
-            this.loginToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loginToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.loginToolStripMenuItem.Text = "Login";
             this.loginToolStripMenuItem.Click += new System.EventHandler(this.loginToolStripMenuItem_Click);
             // 
             // signUpToolStripMenuItem
             // 
             this.signUpToolStripMenuItem.Name = "signUpToolStripMenuItem";
-            this.signUpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.signUpToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.signUpToolStripMenuItem.Text = "Sign up";
             this.signUpToolStripMenuItem.Click += new System.EventHandler(this.signUpToolStripMenuItem_Click);
             // 
@@ -91,7 +94,7 @@
             // 
             this.logoutToolStripMenuItem.Enabled = false;
             this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.logoutToolStripMenuItem.Text = "Logout";
             this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
             // 
@@ -109,34 +112,34 @@
             // signInToolStripMenuItem
             // 
             this.signInToolStripMenuItem.Name = "signInToolStripMenuItem";
-            this.signInToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.signInToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.signInToolStripMenuItem.Text = "Sign in";
             this.signInToolStripMenuItem.Click += new System.EventHandler(this.signInToolStripMenuItem_Click);
             // 
             // manageUsersToolStripMenuItem
             // 
             this.manageUsersToolStripMenuItem.Name = "manageUsersToolStripMenuItem";
-            this.manageUsersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.manageUsersToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.manageUsersToolStripMenuItem.Text = "Manage users";
             // 
             // createEventToolStripMenuItem
             // 
             this.createEventToolStripMenuItem.Name = "createEventToolStripMenuItem";
-            this.createEventToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createEventToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.createEventToolStripMenuItem.Text = "Create event";
             // 
             // logOutToolStripMenuItem1
             // 
             this.logOutToolStripMenuItem1.Enabled = false;
             this.logOutToolStripMenuItem1.Name = "logOutToolStripMenuItem1";
-            this.logOutToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.logOutToolStripMenuItem1.Size = new System.Drawing.Size(147, 22);
             this.logOutToolStripMenuItem1.Text = "Log out";
             // 
             // lblSignedIn
             // 
             this.lblSignedIn.AutoSize = true;
             this.lblSignedIn.ForeColor = System.Drawing.Color.Chartreuse;
-            this.lblSignedIn.Location = new System.Drawing.Point(12, 45);
+            this.lblSignedIn.Location = new System.Drawing.Point(171, 67);
             this.lblSignedIn.Name = "lblSignedIn";
             this.lblSignedIn.Size = new System.Drawing.Size(16, 13);
             this.lblSignedIn.TabIndex = 2;
@@ -146,7 +149,7 @@
             // 
             this.tabUsers.Controls.Add(this.tabPage1);
             this.tabUsers.Controls.Add(this.tabPage2);
-            this.tabUsers.Location = new System.Drawing.Point(12, 115);
+            this.tabUsers.Location = new System.Drawing.Point(22, 172);
             this.tabUsers.Name = "tabUsers";
             this.tabUsers.SelectedIndex = 0;
             this.tabUsers.Size = new System.Drawing.Size(532, 286);
@@ -156,12 +159,47 @@
             // 
             this.tabPage1.Controls.Add(this.listViewUsers);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Name = "tabConcerts";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(524, 260);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.Text = "Concerts";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // listViewUsers
+            // 
+            this.listViewUsers.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.HName,
+            this.Artist,
+            this.price,
+            this.pesetasCol});
+            this.listViewUsers.HideSelection = false;
+            this.listViewUsers.Location = new System.Drawing.Point(6, 3);
+            this.listViewUsers.Name = "listViewUsers";
+            this.listViewUsers.Size = new System.Drawing.Size(518, 251);
+            this.listViewUsers.TabIndex = 4;
+            this.listViewUsers.UseCompatibleStateImageBehavior = false;
+            this.listViewUsers.View = System.Windows.Forms.View.Details;
+            this.listViewUsers.SelectedIndexChanged += new System.EventHandler(this.listViewUsers_SelectedIndexChanged);
+            // 
+            // HName
+            // 
+            this.HName.Text = "Name";
+            this.HName.Width = 111;
+            // 
+            // Artist
+            // 
+            this.Artist.Text = "Artist";
+            this.Artist.Width = 104;
+            // 
+            // price
+            // 
+            this.price.Text = "Price";
+            this.price.Width = 128;
+            // 
+            // pesetasCol
+            // 
+            this.pesetasCol.Text = "Pesetas";
             // 
             // tabPage2
             // 
@@ -173,43 +211,42 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // listViewUsers
+            // btnAddConcert
             // 
-            this.listViewUsers.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.firstNameCol,
-            this.lastNameCol,
-            this.emailCol,
-            this.pesetasCol});
-            this.listViewUsers.HideSelection = false;
-            this.listViewUsers.Location = new System.Drawing.Point(6, 3);
-            this.listViewUsers.Name = "listViewUsers";
-            this.listViewUsers.Size = new System.Drawing.Size(518, 251);
-            this.listViewUsers.TabIndex = 4;
-            this.listViewUsers.UseCompatibleStateImageBehavior = false;
-            this.listViewUsers.View = System.Windows.Forms.View.Details;
-            this.listViewUsers.SelectedIndexChanged += new System.EventHandler(this.listViewUsers_SelectedIndexChanged);
+            this.btnAddConcert.Location = new System.Drawing.Point(22, 62);
+            this.btnAddConcert.Name = "btnAddConcert";
+            this.btnAddConcert.Size = new System.Drawing.Size(131, 23);
+            this.btnAddConcert.TabIndex = 4;
+            this.btnAddConcert.Text = "Add new concert";
+            this.btnAddConcert.UseVisualStyleBackColor = true;
+            this.btnAddConcert.Click += new System.EventHandler(this.btnAddConcert_Click);
             // 
-            // firstNameCol
+            // button2
             // 
-            this.firstNameCol.Text = "Name";
+            this.button2.Location = new System.Drawing.Point(22, 91);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(131, 23);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
             // 
-            // lastNameCol
+            // button3
             // 
-            this.lastNameCol.Text = "Last name";
-            // 
-            // emailCol
-            // 
-            this.emailCol.Text = "E-mail";
-            // 
-            // pesetasCol
-            // 
-            this.pesetasCol.Text = "Pesetas";
+            this.button3.Location = new System.Drawing.Point(22, 120);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(131, 23);
+            this.button3.TabIndex = 6;
+            this.button3.Text = "button3";
+            this.button3.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1040, 549);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnAddConcert);
             this.Controls.Add(this.tabUsers);
             this.Controls.Add(this.lblSignedIn);
             this.Controls.Add(this.menuStrip1);
@@ -241,10 +278,13 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.ListView listViewUsers;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.ColumnHeader firstNameCol;
-        private System.Windows.Forms.ColumnHeader lastNameCol;
-        private System.Windows.Forms.ColumnHeader emailCol;
+        private System.Windows.Forms.ColumnHeader HName;
+        private System.Windows.Forms.ColumnHeader Artist;
+        private System.Windows.Forms.ColumnHeader price;
         private System.Windows.Forms.ColumnHeader pesetasCol;
+        private System.Windows.Forms.Button btnAddConcert;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
     }
 }
 

@@ -41,14 +41,14 @@ namespace Piljetter
                     c.Open();
                     var sql =
                         "SELECT * " +
-                        "FROM Customer;";
-                    var customers = c.Query<Customer>(sql);
-                    foreach (Customer customer in customers)
+                        "FROM Concert;";
+                    var concerts = c.Query<Concert>(sql);
+                    foreach (var concert in concerts)
                     {
-                        ListViewItem item = new ListViewItem(customer.FirstName);
-                        item.SubItems.Add(customer.LastName);
-                        item.SubItems.Add(customer.Email);
-                        item.SubItems.Add(customer.Pesetas.ToString());
+                        ListViewItem item = new ListViewItem(concert.Name);
+                        item.SubItems.Add(concert.Artist_Id.ToString());
+                        item.SubItems.Add(concert.Price.ToString());
+                        item.SubItems.Add(concert.Date.ToString());
                         listViewUsers.Items.Add(item);
 
 
@@ -91,6 +91,12 @@ namespace Piljetter
         private void listViewUsers_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnAddConcert_Click(object sender, EventArgs e)
+        {
+            AddConcert addConcert = new AddConcert();
+            addConcert.Show();
         }
     }
 }

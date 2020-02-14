@@ -87,11 +87,11 @@ INSERT INTO City ([Name], [Country]) VALUES ('Stockholm', 'Sverige');
 INSERT INTO City ([Name], [Country]) VALUES ('London', 'England');
 INSERT INTO City ([Name], [Country]) VALUES ('New York', 'USA');
 
-INSERT INTO Stage ([Name], [MaxVisitors]) VALUES ('Ullevi', 30000);
-INSERT INTO Stage ([Name], [MaxVisitors]) VALUES ('London Palladium', 2000);
-INSERT INTO Stage ([Name], [MaxVisitors]) VALUES ('Friends arena', 25000);
-INSERT INTO Stage ([Name], [MaxVisitors]) VALUES ('Madison Square Garden', 20000);
-INSERT INTO Stage ([Name], [MaxVisitors]) VALUES ('Sticky Fingers', 530);
+INSERT INTO Stage ([City_Id], [Name], [MaxVisitors]) VALUES (1, 'Ullevi', 30000);
+INSERT INTO Stage ([City_Id], [Name], [MaxVisitors]) VALUES (3, 'London Palladium', 2000);
+INSERT INTO Stage ([City_Id], [Name], [MaxVisitors]) VALUES (2, 'Friends arena', 25000);
+INSERT INTO Stage ([City_Id], [Name], [MaxVisitors]) VALUES (4, 'Madison Square Garden', 20000);
+INSERT INTO Stage ([City_Id], [Name], [MaxVisitors]) VALUES (1, 'Sticky Fingers', 530);
 
 INSERT INTO Concert ([Name], [Date], [City_Id], [Artist_Id], [Stage_Id]) VALUES ('Queen concert', GetDate(), 1, 1, 1);
 INSERT INTO Concert ([Name], [Date], [City_Id], [Artist_Id], [Stage_Id]) VALUES ('Abba concert', GetDate(), 3, 3, 1);
