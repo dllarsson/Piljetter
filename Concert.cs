@@ -9,6 +9,7 @@ namespace Piljetter
         public DateTime Date { get; set; }
         public int Stage_Id { get; set; }
         public int Artist_Id { get; set; }
-        public int Price { get; set; }
+        public int Pesetas { get; set; }
+        public bool IsCanceled { get; set; }
     }
 }

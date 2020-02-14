@@ -63,6 +63,12 @@
       <DependentUpon>AdminLogin.cs</DependentUpon>
     </Compile>
     <Compile Include="Artist.cs" />
+    <Compile Include="CancelConcert.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CancelConcert.Designer.cs">
+      <DependentUpon>CancelConcert.cs</DependentUpon>
+    </Compile>
     <Compile Include="City.cs" />
     <Compile Include="Concert.cs" />
     <Compile Include="Customer.cs" />
@@ -93,6 +99,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AdminLogin.resx">
       <DependentUpon>AdminLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CancelConcert.resx">
+      <DependentUpon>CancelConcert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>

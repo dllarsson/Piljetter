@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Piljetter
 {
-    
+
     public partial class MainForm : Form
     {
         public static string connStr = "Server= localhost\\SQLEXPRESS; Database = Piljetter; Integrated Security=True;";
@@ -22,6 +22,7 @@ namespace Piljetter
         public MainForm()
         {
             InitializeComponent();
+            UpdateForm();
 
         }
 
@@ -31,10 +32,7 @@ namespace Piljetter
         }
         public void UpdateForm()
         {
-
-            lblSignedIn.Text = "Logged in as: " + Admin.Name;
-            lblSignedIn.Font = new Font("Arial", 20, FontStyle.Bold);
-            if(Admin.SignedIn == true)
+            try
             {
                 using (var c = new SqlConnection(connStr))
                 {
@@ -46,57 +44,54 @@ namespace Piljetter
                     foreach (var concert in concerts)
                     {
                         ListViewItem item = new ListViewItem(concert.Name);
-                        item.SubItems.Add(concert.Artist_Id.ToString());
-                        item.SubItems.Add(concert.Price.ToString());
+                        item.SubItems.Add(concert.Id.ToString());
+                        item.SubItems.Add(concert.Pesetas.ToString());
                         item.SubItems.Add(concert.Date.ToString());
+                        if (concert.IsCanceled)
+                        {
+                            item.SubItems.Add("YES");
+                        }
+                        else
+                        {
+                            item.SubItems.Add("NO");
+                        }
                         listViewUsers.Items.Add(item);
 
 
                     }
                 }
+
             }
-        }
-        public void SetLogout()
-        {
-            this.loginToolStripMenuItem.Enabled = true;
-        }
-        private void loginToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Login l = new Login(this);
-            l.Show();
-        }
-
-        private void signUpToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SignUp sign = new SignUp();
-            sign.Show();
-        }
-
-        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
 
-        private void signInToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            AdminLogin al = new AdminLogin(this);
-            al.Show();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(Admin.Name + "   " + Admin.Password);
-        }
-
-        private void listViewUsers_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void btnAddConcert_Click(object sender, EventArgs e)
         {
             AddConcert addConcert = new AddConcert();
             addConcert.Show();
+
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            listViewUsers.Items.Clear();
+            UpdateForm();
+        }
+
+        private void btnCancelConcert_Click(object sender, EventArgs e)
+        {
+            CancelConcert cancelConcert = new CancelConcert();
+            cancelConcert.Show();
         }
     }
 }

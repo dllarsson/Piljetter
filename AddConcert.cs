@@ -29,30 +29,49 @@ namespace Piljetter
             }
             else
             {
-                using (var c = new SqlConnection(MainForm.connStr))
+                try
                 {
-                    c.Open();
+                    using (var c = new SqlConnection(MainForm.connStr))
+                    {
+                        c.Open();
 
-                    var sql = 
-                        @"SELECT [Id] 
+                        var sql =
+                            @"SELECT [Id] 
                         FROM [Stage] 
                         WHERE [Name] = @Name;";
-                    var stageId = c.ExecuteScalar(sql, new { Name = listBoxStage.SelectedItem });
+                        var stageId = c.ExecuteScalar(sql, new { Name = listBoxStage.SelectedItem });
 
-                    sql =
-                        @"SELECT [Id ]
+                        sql =
+                            @"SELECT [Id ]
                         FROM [Artist]
                         WHERE [Name] = @Name;";
-                    var artistId = c.ExecuteScalar(sql, new { Name = listBoxArtist.SelectedItem });
+                        var artistId = c.ExecuteScalar(sql, new { Name = listBoxArtist.SelectedItem });
 
-                    sql =
-                        "INSERT INTO Concert ([Name], [Date], [Stage_Id], [Artist_Id]) " +
-                        "VALUES (@Name, @date, @Stage_Id, @Artist_Id);";
-                    c.Execute(sql, new { Name = tbConcertName.Text, date = dateTimePicker1.Value.Date, Stage_Id = stageId, Artist_Id = artistId });
+                        sql =
+                            @"INSERT INTO Concert ([Name], [Date], [Stage_Id], [Artist_Id], Pesetas) 
+                        VALUES (@Name, @date, @Stage_Id, @Artist_Id, @Pesetas);";
+                        c.Execute(sql, new
+                        {
+                            Name = tbConcertName.Text,
+                            date = dateTimePicker1.Value.Date,
+                            Stage_Id = stageId,
+                            Artist_Id = artistId,
+                            Pesetas = tbTicketPrice.Text
+                        });
+                        MessageBox.Show("Concert was succesfully added!");
+                        tbTicketPrice.Text = "";
+                        tbConcertName.Text = "";
+                    }
+
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    
                 }
             }
             if (!int.TryParse(tbTicketPrice.Text, out price)) MessageBox.Show("Price must be only digits");
-            
+
         }
 
         private void AddConcert_Load(object sender, EventArgs e)

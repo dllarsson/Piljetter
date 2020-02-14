@@ -1,7 +1,4 @@
-﻿CREATE DATABASE Piljetter
-
-USE Piljetter
-
+﻿USE Piljetter
 CREATE TABLE City
 (
 [Id] INT IDENTITY(1,1) NOT NULL,
@@ -24,17 +21,23 @@ CREATE TABLE Stage
 [City_Id] INT FOREIGN KEY REFERENCES City([Id]) NOT NULL,
 PRIMARY KEY (Id)
 )
-
 CREATE TABLE Concert
 (
 [Id] INT IDENTITY(1,1) NOT NULL,
 [Name] NVARCHAR(20) NOT NULL,
 [Date] DATETIME NOT NULL,
+[IsCanceled] BIT NOT NULL DEFAULT(0),
+[Pesetas] INT NOT NULL,
 [Stage_Id] INT FOREIGN KEY REFERENCES Stage([Id]) NOT NULL,
 [Artist_Id] INT FOREIGN KEY REFERENCES Artist([Id]) NOT NULL,
 PRIMARY KEY (Id)
 )
-INSERT INTO Concert ([Name], [Date]) VALUES ('Test', GetDate());
+ALTER TABLE Concert
+ADD CONSTRAINT [Date] CHECK (
+    CAST([Date] as date) >= CAST(GETDATE() as date)
+     );
+ALTER TABLE Concert
+ADD CONSTRAINT ArtistAndTime UNIQUE ([Date], Artist_Id)
 
 CREATE TABLE Customer
 (
@@ -103,8 +106,4 @@ INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], 
 INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], [Pesetas]) VALUES ('Jesper', 'Larsson', 'jesper@gmail.com', 'Jeppe', '123', 555);
 INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], [Pesetas]) VALUES ('Johan', 'Bernhardsson', 'johan@gmail.com', 'Juan', '123', 555);
 
-SELECT a.Name, c.Name
-FROM Artist a
-INNER JOIN Concert ON Concert.Artist_Id = a.Id
-INNER JOIN City c ON Concert.City_Id = c.Id 
-WHERE a.Name = 'Abba'
+SELECT * from Concert

@@ -19,10 +19,6 @@ namespace Piljetter
             InitializeComponent();
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
-        {
-            this.Close();
-            mf.SetLogout();
-        }
+
     }
 }
