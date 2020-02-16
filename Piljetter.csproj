@@ -49,18 +49,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddArtist.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddArtist.Designer.cs">
+      <DependentUpon>AddArtist.cs</DependentUpon>
+    </Compile>
     <Compile Include="AddConcert.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AddConcert.Designer.cs">
       <DependentUpon>AddConcert.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.cs" />
-    <Compile Include="AdminLogin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AdminLogin.Designer.cs">
-      <DependentUpon>AdminLogin.cs</DependentUpon>
     </Compile>
     <Compile Include="Artist.cs" />
     <Compile Include="CancelConcert.cs">
@@ -72,12 +71,6 @@
     <Compile Include="City.cs" />
     <Compile Include="Concert.cs" />
     <Compile Include="Customer.cs" />
-    <Compile Include="Login.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Login.Designer.cs">
-      <DependentUpon>Login.cs</DependentUpon>
-    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,18 +86,14 @@
       <DependentUpon>SignUp.cs</DependentUpon>
     </Compile>
     <Compile Include="Stage.cs" />
-    <Compile Include="User.cs" />
+    <EmbeddedResource Include="AddArtist.resx">
+      <DependentUpon>AddArtist.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AddConcert.resx">
       <DependentUpon>AddConcert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AdminLogin.resx">
-      <DependentUpon>AdminLogin.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="CancelConcert.resx">
       <DependentUpon>CancelConcert.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Login.resx">
-      <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

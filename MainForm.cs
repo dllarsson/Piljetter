@@ -17,8 +17,6 @@ namespace Piljetter
     {
         public static string connStr = "Server= localhost\\SQLEXPRESS; Database = Piljetter; Integrated Security=True;";
         public MainForm frm { get; set; }
-        public Admin Admin { get; set; }
-        public List<User> users = new List<User>();
         public MainForm()
         {
             InitializeComponent();
@@ -26,10 +24,7 @@ namespace Piljetter
 
         }
 
-        public MainForm(Admin a)
-        {
-            Admin = a;
-        }
+       
         public void UpdateForm()
         {
             try

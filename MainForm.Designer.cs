@@ -33,11 +33,11 @@
             this.Concert_Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.price = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.pesetasCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.isCanceled = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnAddConcert = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnCancelConcert = new System.Windows.Forms.Button();
-            this.isCanceled = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listViewUsers
@@ -74,6 +74,10 @@
             // 
             this.pesetasCol.Text = "Date";
             this.pesetasCol.Width = 172;
+            // 
+            // isCanceled
+            // 
+            this.isCanceled.Text = "IsCanceled?";
             // 
             // btnAddConcert
             // 
@@ -114,10 +118,6 @@
             this.btnCancelConcert.Text = "Cancel Concert";
             this.btnCancelConcert.UseVisualStyleBackColor = true;
             this.btnCancelConcert.Click += new System.EventHandler(this.btnCancelConcert_Click);
-            // 
-            // isCanceled
-            // 
-            this.isCanceled.Text = "IsCanceled?";
             // 
             // MainForm
             // 

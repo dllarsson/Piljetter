@@ -76,6 +76,9 @@ namespace Piljetter
 
         private void AddConcert_Load(object sender, EventArgs e)
         {
+            listBoxArtist.Items.Clear();
+            listBoxCity.Items.Clear();
+            listBoxStage.Items.Clear();
             using (var c = new SqlConnection(MainForm.connStr))
             {
                 c.Open();
@@ -116,6 +119,17 @@ namespace Piljetter
                     listBoxStage.Items.Add(stage.Name);
                 }
             }
+        }
+
+        private void btnAddArtist_Click(object sender, EventArgs e)
+        {
+            AddArtist addArtist = new AddArtist();
+            addArtist.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.AddConcert_Load(sender, e);
         }
     }
 }

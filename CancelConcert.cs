@@ -26,16 +26,28 @@ namespace Piljetter
                 using (var c = new SqlConnection(MainForm.connStr))
                 {
                     c.Open();
+                    var sql = @"
+                            SELECT [Name]
+                            FROM Concert
+                            WHERE Id = @Id";
+                    var nameCheck = c.Query(sql, new { Id = tbConcertId.Text });
 
-                    var sql =
-                        @"UPDATE Concert
+                    if (nameCheck.Count() == 1)
+                    {
+                        sql =
+                            @"UPDATE Concert
                           SET [IsCanceled] = 1
                           WHERE [Id] = @Id;";
-                    c.Query(sql, new { Id = tbConcertId.Text });
+                        c.ExecuteScalar<Concert>(sql, new { Id = tbConcertId.Text });
 
-                   
-                    MessageBox.Show("Concert was succesfully canceled!");
-           
+
+                        MessageBox.Show("Concert was succesfully canceled!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("That ID does not belong to a concert!");
+                    }
+
                 }
 
             }

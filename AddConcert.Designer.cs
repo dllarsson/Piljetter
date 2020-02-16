@@ -38,6 +38,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tbConcertName = new System.Windows.Forms.TextBox();
+            this.btnAddArtist = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBoxCity
@@ -123,11 +125,33 @@
             this.tbConcertName.Size = new System.Drawing.Size(168, 20);
             this.tbConcertName.TabIndex = 8;
             // 
+            // btnAddArtist
+            // 
+            this.btnAddArtist.Location = new System.Drawing.Point(321, 244);
+            this.btnAddArtist.Name = "btnAddArtist";
+            this.btnAddArtist.Size = new System.Drawing.Size(150, 23);
+            this.btnAddArtist.TabIndex = 10;
+            this.btnAddArtist.Text = "Add artist";
+            this.btnAddArtist.UseVisualStyleBackColor = true;
+            this.btnAddArtist.Click += new System.EventHandler(this.btnAddArtist_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(321, 274);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(150, 23);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "btnRefresh";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // AddConcert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(706, 319);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnAddArtist);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.tbConcertName);
             this.Controls.Add(this.label2);
@@ -158,5 +182,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbConcertName;
+        private System.Windows.Forms.Button btnAddArtist;
+        private System.Windows.Forms.Button button1;
     }
 }

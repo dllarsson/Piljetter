@@ -1,8 +1,11 @@
-﻿USE Piljetter
+﻿USE Hej
+DROP DATABASE Piljetter
+CREATE DATABASE Piljetter
+Use Piljetter
 CREATE TABLE City
 (
 [Id] INT IDENTITY(1,1) NOT NULL,
-[Name] NVARCHAR(50) NOT NULL,
+[Name] NVARCHAR(50) UNIQUE NOT NULL,
 [Country] NVARCHAR(20) NOT NULL,
 PRIMARY KEY (Id)
 )
@@ -10,6 +13,8 @@ CREATE TABLE Artist
 (
 [Id] INT IDENTITY(1,1) NOT NULL,
 [Name] NVARCHAR(20) NOT NULL,
+[Popularity] INT NOT NULL,
+CHECK (Popularity >= 1 AND Popularity <= 5),
 PRIMARY KEY (Id)
 )
 
@@ -18,6 +23,7 @@ CREATE TABLE Stage
 [Id] INT IDENTITY(1,1) NOT NULL,
 [Name] NVARCHAR(50) NOT NULL UNIQUE,
 [MaxVisitors] INT NOT NULL,
+[StageQuality] INT NOT NULL,
 [City_Id] INT FOREIGN KEY REFERENCES City([Id]) NOT NULL,
 PRIMARY KEY (Id)
 )
@@ -75,30 +81,31 @@ CREATE TABLE [Admin]
 [Password] NVARCHAR(30) NOT NULL,
 PRIMARY KEY ([Id])
 )
-SELECT * FROM Customer
 INSERT INTO [Admin] ([Name], [Password]) VALUES ('Admin', 'abc123');
 INSERT INTO [Admin] ([Name], [Password]) VALUES ('david', 'hej123');
 
 
-INSERT INTO Artist ([Name]) VALUES ('Queen');
-INSERT INTO Artist ([Name]) VALUES ('KISS');
-INSERT INTO Artist ([Name]) VALUES ('ABBA');
-INSERT INTO Artist ([Name]) VALUES ('Green Day');
+INSERT INTO Artist ([Name], Popularity) VALUES ('Queen', 4);
+INSERT INTO Artist ([Name], Popularity) VALUES ('KISS', 2);
+INSERT INTO Artist ([Name], Popularity) VALUES ('ABBA',5);
+INSERT INTO Artist ([Name], Popularity) VALUES ('Green Day',1);
 
 INSERT INTO City ([Name], [Country]) VALUES ('Göteborg', 'Sverige');
 INSERT INTO City ([Name], [Country]) VALUES ('Stockholm', 'Sverige');
 INSERT INTO City ([Name], [Country]) VALUES ('London', 'England');
 INSERT INTO City ([Name], [Country]) VALUES ('New York', 'USA');
 
-INSERT INTO Stage ([City_Id], [Name], [MaxVisitors]) VALUES (1, 'Ullevi', 30000);
-INSERT INTO Stage ([City_Id], [Name], [MaxVisitors]) VALUES (3, 'London Palladium', 2000);
-INSERT INTO Stage ([City_Id], [Name], [MaxVisitors]) VALUES (2, 'Friends arena', 25000);
-INSERT INTO Stage ([City_Id], [Name], [MaxVisitors]) VALUES (4, 'Madison Square Garden', 20000);
-INSERT INTO Stage ([City_Id], [Name], [MaxVisitors]) VALUES (1, 'Sticky Fingers', 530);
+INSERT INTO Stage ([City_Id], [Name], [MaxVisitors], StageQuality) VALUES (1, 'Ullevi', 30000, 2);
+INSERT INTO Stage ([City_Id], [Name], [MaxVisitors], StageQuality) VALUES (3, 'London Palladium', 2000,5);
+INSERT INTO Stage ([City_Id], [Name], [MaxVisitors], StageQuality) VALUES (2, 'Friends arena', 25000,2);
+INSERT INTO Stage ([City_Id], [Name], [MaxVisitors], StageQuality) VALUES (4, 'Madison Square Garden', 20000,3);
+INSERT INTO Stage ([City_Id], [Name], [MaxVisitors], StageQuality) VALUES (1, 'Sticky Fingers', 530,1);
 
-INSERT INTO Concert ([Name], [Date], [City_Id], [Artist_Id], [Stage_Id]) VALUES ('Queen concert', GetDate(), 1, 1, 1);
-INSERT INTO Concert ([Name], [Date], [City_Id], [Artist_Id], [Stage_Id]) VALUES ('Abba concert', GetDate(), 3, 3, 1);
-INSERT INTO Concert ([Name], [Date], [City_Id], [Artist_Id], [Stage_Id]) VALUES ('Green Day concert', GetDate(), 4, 4, 1);
+INSERT INTO Stage ([City_Id], [Name], [MaxVisitors], StageQuality) VALUES (1, 'Scandinavium', 26000,2);
+INSERT INTO Stage ([City_Id], [Name], [MaxVisitors], StageQuality) VALUES (3, 'Some london arena', 660,4);
+INSERT INTO Stage ([City_Id], [Name], [MaxVisitors], StageQuality) VALUES (2, 'Globen', 66641,1);
+INSERT INTO Stage ([City_Id], [Name], [MaxVisitors], StageQuality) VALUES (4, 'Times square', 23458,5);
+INSERT INTO Stage ([City_Id], [Name], [MaxVisitors], StageQuality) VALUES (1, 'Trädgårn', 1111,3);
 
 INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], [Pesetas]) VALUES ('David', 'Larsson', 'david@gmail.com', 'Davlar', '123', 555);
 INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], [Pesetas]) VALUES ('Martin', 'Larsson', 'martin@gmail.com', 'M', '123', 555);
@@ -106,4 +113,17 @@ INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], 
 INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], [Pesetas]) VALUES ('Jesper', 'Larsson', 'jesper@gmail.com', 'Jeppe', '123', 555);
 INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], [Pesetas]) VALUES ('Johan', 'Bernhardsson', 'johan@gmail.com', 'Juan', '123', 555);
 
-SELECT * from Concert
+INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id]) VALUES ('Abba concert', 3, GetDate(), 300, 3);
+INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id]) VALUES ('Abba concert', 3, GetDate(), 300, 3);
+
+SELECT * FROM Customer
+SelECT * FROM Concert
+SELECT * FROM STAGE
+
+							
+
+                            SELECT *
+                            FROM Concert c
+                            INNER JOIN Artist a ON (a.Id = c.Artist_Id)
+                            INNER JOIN Stage s ON (s.Id = c.Stage_Id)
+                            INNER JOIN City cty ON (cty.Id = s.City_Id)
