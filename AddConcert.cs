@@ -34,30 +34,17 @@ namespace Piljetter
                     using (var c = new SqlConnection(MainForm.connStr))
                     {
                         c.Open();
-
-                        var sql =
-                            @"SELECT [Id] 
-                        FROM [Stage] 
-                        WHERE [Name] = @Name;";
-                        var stageId = c.ExecuteScalar(sql, new { Name = listBoxStage.SelectedItem });
-
-                        sql =
-                            @"SELECT [Id ]
-                        FROM [Artist]
-                        WHERE [Name] = @Name;";
-                        var artistId = c.ExecuteScalar(sql, new { Name = listBoxArtist.SelectedItem });
-
-                        sql =
-                            @"INSERT INTO Concert ([Name], [Date], [Stage_Id], [Artist_Id], Pesetas) 
-                        VALUES (@Name, @date, @Stage_Id, @Artist_Id, @Pesetas);";
+                        var sql =@"
+                        INSERT INTO Concert ([Name], [Date], [Stage_Id], [Artist_Id], Pesetas) 
+                        VALUES (@Name, @date, (SELECT Id FROM Stage WHERE Name = @StageName), (SELECT Id FROM Artist WHERE Name = @ArtistName), @Pesetas);";
                         c.Execute(sql, new
                         {
                             Name = tbConcertName.Text,
                             date = dateTimePicker1.Value.Date,
-                            Stage_Id = stageId,
-                            Artist_Id = artistId,
+                            StageName = listBoxStage.SelectedItem,
+                            ArtistName = listBoxArtist.SelectedItem,
                             Pesetas = tbTicketPrice.Text
-                        });
+                        }); ;
                         MessageBox.Show("Concert was succesfully added!");
                         tbTicketPrice.Text = "";
                         tbConcertName.Text = "";
@@ -111,7 +98,7 @@ namespace Piljetter
                 var sql =
                     "SELECT s.Name " +
                     "FROM Stage s " +
-                    "INNER JOIN City c ON City_Id = c.Id " +
+                    "INNER JOIN City c ON s.City_Id = c.Id " +
                     "WHERE c.Name = @Name;";
                 var stages = c.Query<Stage>(sql, new { Name = this.listBoxCity.SelectedItem });
                 foreach (var stage in stages)

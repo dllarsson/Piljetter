@@ -29,15 +29,20 @@ namespace PiljetterUserClient
                 {
                     c.Open();
                     var sql = @"
-                            SELECT [Username]
+                            SELECT *
                             FROM Customer
                             WHERE [Username] = @Username AND [Password] = @Password;";
 
-                    var Customer = c.Query(sql, new { Username = textBox1.Text, Password = textBox2.Text });
+                    var Customer = c.Query<Customer>(sql, new { Username = textBox1.Text, Password = textBox2.Text });
                     if (Customer.Count() == 1)
                     {
+                        foreach  (var cust in Customer)
+                        {
+                            MainForm.logedInUser = cust;
+                        }
                         MessageBox.Show("Sign in succesful");
                         MainForm.IsLoggedIn = true;
+                        
                         MainForm.UpdateForm();
                         this.Close();
                     }

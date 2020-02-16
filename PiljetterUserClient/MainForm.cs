@@ -16,10 +16,10 @@ namespace PiljetterUserClient
     {
         public static string connStr = "Server= localhost\\SQLEXPRESS; Database = Piljetter; Integrated Security=True;";
         public bool IsLoggedIn { get; set; }
+        public Customer logedInUser { get; set; } = new Customer();
         public MainForm()
         {
             InitializeComponent();
-            ResizeListViewColumns(listView1);
         }
 
         private void btnSingUp_Click(object sender, EventArgs e)
@@ -31,11 +31,17 @@ namespace PiljetterUserClient
         private void MainForm_Load(object sender, EventArgs e)
         {
             radioButton3.Checked = true;
+            this.gwConcert.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.gwConcert.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.gwConcert.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+
         }
 
         public void UpdateForm()
         {
-
+            lblUsername.Text = "Username: " + logedInUser.Username;
+            lblBalance.Text = "Pesetas: " + logedInUser.Pesetas.ToString();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -46,7 +52,6 @@ namespace PiljetterUserClient
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            listView1.Items.Clear();
             var city = TbSearchCity.Text;
             var artist = tbSearchArtists.Text;
             var stage = tbSearchStages.Text;
@@ -87,13 +92,12 @@ namespace PiljetterUserClient
                         {
                             if (!concert.IsCanceled)
                             {
-                                ListViewItem item = new ListViewItem(concert.Name);
-                                item.SubItems.Add(concert.Date.ToString());
-                                item.SubItems.Add(concert.Pesetas.ToString());
-
-                                listView1.Items.Add(item);
-                            
-                            }
+                            DataGridViewRow row = (DataGridViewRow)gwConcert.Rows[0].Clone();
+                            row.Cells[0].Value = concert.Name;
+                            row.Cells[1].Value = concert.Date.ToString("dd/MM/yyyy");
+                            row.Cells[2].Value = concert.Pesetas;
+                            gwConcert.Rows.Add(row);
+                        }
 
 
                         }
@@ -108,10 +112,7 @@ namespace PiljetterUserClient
 
         }
 
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
-        }
         private void ResizeListViewColumns(ListView lv)
         {
             foreach (ColumnHeader column in lv.Columns)
@@ -154,6 +155,10 @@ namespace PiljetterUserClient
             {
                 dateTimePicker3.Enabled = false;
             }
+        }
+
+        private void btnBuyTicket_Click(object sender, EventArgs e)
+        {
         }
     }
 }

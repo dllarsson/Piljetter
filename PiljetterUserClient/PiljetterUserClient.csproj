@@ -52,6 +52,7 @@
     <Compile Include="Artist.cs" />
     <Compile Include="City.cs" />
     <Compile Include="Concert.cs" />
+    <Compile Include="Customer.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>

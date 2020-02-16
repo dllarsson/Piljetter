@@ -18,6 +18,8 @@ CHECK (Popularity >= 1 AND Popularity <= 5),
 PRIMARY KEY (Id)
 )
 
+
+
 CREATE TABLE Stage
 (
 [Id] INT IDENTITY(1,1) NOT NULL,
@@ -43,7 +45,10 @@ ADD CONSTRAINT [Date] CHECK (
     CAST([Date] as date) >= CAST(GETDATE() as date)
      );
 ALTER TABLE Concert
-ADD CONSTRAINT ArtistAndTime UNIQUE ([Date], Artist_Id)
+ADD CONSTRAINT ArtistAndTime UNIQUE ([Date], Artist_Id);
+
+ALTER TABLE Concert 
+ADD CONSTRAINT StageAndTime UNIQUE ([Date], Stage_Id);
 
 CREATE TABLE Customer
 (
@@ -74,21 +79,12 @@ Customer_Id INT FOREIGN KEY REFERENCES Customer ([Id]) NOT NULL,
 PRIMARY KEY ([Id])
 )
 
-CREATE TABLE [Admin]
-(
-[Id] INT IDENTITY (1,1) NOT NULL,
-[Name] NVARCHAR (30) UNIQUE NOT NULL,
-[Password] NVARCHAR(30) NOT NULL,
-PRIMARY KEY ([Id])
-)
-INSERT INTO [Admin] ([Name], [Password]) VALUES ('Admin', 'abc123');
-INSERT INTO [Admin] ([Name], [Password]) VALUES ('david', 'hej123');
-
-
 INSERT INTO Artist ([Name], Popularity) VALUES ('Queen', 4);
 INSERT INTO Artist ([Name], Popularity) VALUES ('KISS', 2);
 INSERT INTO Artist ([Name], Popularity) VALUES ('ABBA',5);
 INSERT INTO Artist ([Name], Popularity) VALUES ('Green Day',1);
+INSERT INTO Artist ([Name], Popularity) VALUES ('21 pilots',5);
+INSERT INTO Artist ([Name], Popularity) VALUES ('Blink 182',5);
 
 INSERT INTO City ([Name], [Country]) VALUES ('Göteborg', 'Sverige');
 INSERT INTO City ([Name], [Country]) VALUES ('Stockholm', 'Sverige');
@@ -107,23 +103,17 @@ INSERT INTO Stage ([City_Id], [Name], [MaxVisitors], StageQuality) VALUES (2, 'G
 INSERT INTO Stage ([City_Id], [Name], [MaxVisitors], StageQuality) VALUES (4, 'Times square', 23458,5);
 INSERT INTO Stage ([City_Id], [Name], [MaxVisitors], StageQuality) VALUES (1, 'Trädgårn', 1111,3);
 
-INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], [Pesetas]) VALUES ('David', 'Larsson', 'david@gmail.com', 'Davlar', '123', 555);
-INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], [Pesetas]) VALUES ('Martin', 'Larsson', 'martin@gmail.com', 'M', '123', 555);
-INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], [Pesetas]) VALUES ('Nicklas', 'Löfstrand', 'Nicklas@gmail.com', 'Nicke', '123', 555);
-INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], [Pesetas]) VALUES ('Jesper', 'Larsson', 'jesper@gmail.com', 'Jeppe', '123', 555);
-INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], [Pesetas]) VALUES ('Johan', 'Bernhardsson', 'johan@gmail.com', 'Juan', '123', 555);
+INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], [Pesetas]) VALUES ('David', 'Larsson', 'david@gmail.com', 'Davlar', '123', 10000);
+INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], [Pesetas]) VALUES ('Martin', 'Larsson', 'martin@gmail.com', 'M', '123', 10000);
+INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], [Pesetas]) VALUES ('Nicklas', 'Löfstrand', 'Nicklas@gmail.com', 'Nicke', '123', 10000);
+INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], [Pesetas]) VALUES ('Jesper', 'Larsson', 'jesper@gmail.com', 'Jeppe', '123', 10000);
+INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], [Pesetas]) VALUES ('Johan', 'Bernhardsson', 'johan@gmail.com', 'Juan', '123', 10000);
 
-INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id]) VALUES ('Abba concert', 3, GetDate(), 300, 3);
-INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id]) VALUES ('Abba concert', 3, GetDate(), 300, 3);
+INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id]) VALUES ('Green day concert', 4, Convert(varchar(10), GETDATE(),120) , 300, 3);
+INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id]) VALUES ('Abba concert', 3, Convert(varchar(10), GETDATE(),120) , 300, 1);
+INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id]) VALUES ('Kiss concert!', 2, Convert(varchar(10), GETDATE(),120) , 300, 2);
+INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id]) VALUES ('Queen concert', 1, Convert(varchar(10), GETDATE(),120) , 300, 4);
 
-SELECT * FROM Customer
+
+
 SelECT * FROM Concert
-SELECT * FROM STAGE
-
-							
-
-                            SELECT *
-                            FROM Concert c
-                            INNER JOIN Artist a ON (a.Id = c.Artist_Id)
-                            INNER JOIN Stage s ON (s.Id = c.Stage_Id)
-                            INNER JOIN City cty ON (cty.Id = s.City_Id)

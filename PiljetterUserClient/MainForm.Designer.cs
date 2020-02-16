@@ -33,10 +33,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.TbSearchCity = new System.Windows.Forms.TextBox();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.colConcertName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tbSearchArtists = new System.Windows.Forms.TextBox();
             this.TbSearchArtist = new System.Windows.Forms.Label();
             this.tbSearchStages = new System.Windows.Forms.TextBox();
@@ -50,6 +46,15 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.btnBuyTicket = new System.Windows.Forms.Button();
+            this.lblUsername = new System.Windows.Forms.Label();
+            this.lblBalance = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.gwConcert = new System.Windows.Forms.DataGridView();
+            this.ConcertName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ConcertDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ConcertPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.gwConcert)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSingUp
@@ -102,36 +107,6 @@
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // listView1
-            // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colConcertName,
-            this.colDate,
-            this.colPrice});
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(18, 429);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1164, 251);
-            this.listView1.TabIndex = 5;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
-            // 
-            // colConcertName
-            // 
-            this.colConcertName.Text = "Concert name:";
-            this.colConcertName.Width = 185;
-            // 
-            // colDate
-            // 
-            this.colDate.Text = "Date:";
-            this.colDate.Width = 217;
-            // 
-            // colPrice
-            // 
-            this.colPrice.Text = "Price";
-            this.colPrice.Width = 184;
             // 
             // tbSearchArtists
             // 
@@ -258,11 +233,82 @@
             this.radioButton3.Text = "Search any date";
             this.radioButton3.UseVisualStyleBackColor = true;
             // 
+            // btnBuyTicket
+            // 
+            this.btnBuyTicket.Location = new System.Drawing.Point(723, 534);
+            this.btnBuyTicket.Name = "btnBuyTicket";
+            this.btnBuyTicket.Size = new System.Drawing.Size(163, 62);
+            this.btnBuyTicket.TabIndex = 21;
+            this.btnBuyTicket.Text = "Buy ticket for selected concert";
+            this.btnBuyTicket.UseVisualStyleBackColor = true;
+            this.btnBuyTicket.Click += new System.EventHandler(this.btnBuyTicket_Click);
+            // 
+            // lblUsername
+            // 
+            this.lblUsername.AutoSize = true;
+            this.lblUsername.Location = new System.Drawing.Point(719, 438);
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Size = new System.Drawing.Size(83, 20);
+            this.lblUsername.TabIndex = 22;
+            this.lblUsername.Text = "Username";
+            // 
+            // lblBalance
+            // 
+            this.lblBalance.AutoSize = true;
+            this.lblBalance.Location = new System.Drawing.Point(719, 458);
+            this.lblBalance.Name = "lblBalance";
+            this.lblBalance.Size = new System.Drawing.Size(67, 20);
+            this.lblBalance.TabIndex = 23;
+            this.lblBalance.Text = "Balance";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 410);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(129, 20);
+            this.label5.TabIndex = 25;
+            this.label5.Text = "Avaible concerts:";
+            // 
+            // gwConcert
+            // 
+            this.gwConcert.AllowUserToDeleteRows = false;
+            this.gwConcert.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gwConcert.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ConcertName,
+            this.ConcertDate,
+            this.ConcertPrice});
+            this.gwConcert.Location = new System.Drawing.Point(18, 438);
+            this.gwConcert.MultiSelect = false;
+            this.gwConcert.Name = "gwConcert";
+            this.gwConcert.Size = new System.Drawing.Size(695, 242);
+            this.gwConcert.TabIndex = 26;
+            // 
+            // ConcertName
+            // 
+            this.ConcertName.HeaderText = "Concert";
+            this.ConcertName.Name = "ConcertName";
+            // 
+            // ConcertDate
+            // 
+            this.ConcertDate.HeaderText = "Date";
+            this.ConcertDate.Name = "ConcertDate";
+            // 
+            // ConcertPrice
+            // 
+            this.ConcertPrice.HeaderText = "Pesetas";
+            this.ConcertPrice.Name = "ConcertPrice";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1200, 692);
+            this.Controls.Add(this.gwConcert);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.lblBalance);
+            this.Controls.Add(this.lblUsername);
+            this.Controls.Add(this.btnBuyTicket);
             this.Controls.Add(this.radioButton3);
             this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.radioButton1);
@@ -276,7 +322,6 @@
             this.Controls.Add(this.tbSearchStage);
             this.Controls.Add(this.tbSearchArtists);
             this.Controls.Add(this.TbSearchArtist);
-            this.Controls.Add(this.listView1);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.TbSearchCity);
             this.Controls.Add(this.label1);
@@ -287,6 +332,7 @@
             this.Name = "MainForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.gwConcert)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -299,10 +345,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox TbSearchCity;
         private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ColumnHeader colConcertName;
-        private System.Windows.Forms.ColumnHeader colDate;
-        private System.Windows.Forms.ColumnHeader colPrice;
         private System.Windows.Forms.TextBox tbSearchArtists;
         private System.Windows.Forms.Label TbSearchArtist;
         private System.Windows.Forms.TextBox tbSearchStages;
@@ -316,6 +358,14 @@
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.Button btnBuyTicket;
+        private System.Windows.Forms.Label lblUsername;
+        private System.Windows.Forms.Label lblBalance;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridView gwConcert;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ConcertName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ConcertDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ConcertPrice;
     }
 }
 
