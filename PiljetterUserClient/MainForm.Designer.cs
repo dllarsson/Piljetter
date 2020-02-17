@@ -50,11 +50,23 @@
             this.lblUsername = new System.Windows.Forms.Label();
             this.lblBalance = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.gwConcert = new System.Windows.Forms.DataGridView();
-            this.ConcertName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ConcertDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ConcertPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.gwConcert)).BeginInit();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.colConcertName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colArtist = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colCity = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colStage = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tbConcertId = new System.Windows.Forms.TextBox();
+            this.tabTicketsAndCoupons = new System.Windows.Forms.TabControl();
+            this.tabTickets = new System.Windows.Forms.TabPage();
+            this.tabCoupons = new System.Windows.Forms.TabPage();
+            this.listBoxTickets = new System.Windows.Forms.ListBox();
+            this.listBoxCoupons = new System.Windows.Forms.ListBox();
+            this.tabTicketsAndCoupons.SuspendLayout();
+            this.tabTickets.SuspendLayout();
+            this.tabCoupons.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSingUp
@@ -149,7 +161,7 @@
             // dateTimePicker1
             // 
             this.dateTimePicker1.Enabled = false;
-            this.dateTimePicker1.Location = new System.Drawing.Point(12, 313);
+            this.dateTimePicker1.Location = new System.Drawing.Point(18, 315);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(200, 26);
             this.dateTimePicker1.TabIndex = 10;
@@ -157,7 +169,7 @@
             // dateTimePicker2
             // 
             this.dateTimePicker2.Enabled = false;
-            this.dateTimePicker2.Location = new System.Drawing.Point(12, 370);
+            this.dateTimePicker2.Location = new System.Drawing.Point(18, 372);
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(200, 26);
             this.dateTimePicker2.TabIndex = 11;
@@ -165,7 +177,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 290);
+            this.label2.Location = new System.Drawing.Point(14, 292);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(46, 20);
             this.label2.TabIndex = 12;
@@ -174,7 +186,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 347);
+            this.label3.Location = new System.Drawing.Point(18, 349);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(27, 20);
             this.label3.TabIndex = 13;
@@ -187,7 +199,6 @@
             this.dateTimePicker3.Name = "dateTimePicker3";
             this.dateTimePicker3.Size = new System.Drawing.Size(200, 26);
             this.dateTimePicker3.TabIndex = 15;
-            this.dateTimePicker3.ValueChanged += new System.EventHandler(this.dateTimePicker3_ValueChanged);
             // 
             // label4
             // 
@@ -201,7 +212,7 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(219, 233);
+            this.radioButton1.Location = new System.Drawing.Point(219, 225);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(174, 24);
             this.radioButton1.TabIndex = 18;
@@ -213,7 +224,7 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(219, 347);
+            this.radioButton2.Location = new System.Drawing.Point(224, 372);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(143, 24);
             this.radioButton2.TabIndex = 19;
@@ -225,7 +236,7 @@
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(219, 155);
+            this.radioButton3.Location = new System.Drawing.Point(219, 157);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(143, 24);
             this.radioButton3.TabIndex = 20;
@@ -235,76 +246,154 @@
             // 
             // btnBuyTicket
             // 
-            this.btnBuyTicket.Location = new System.Drawing.Point(723, 534);
+            this.btnBuyTicket.Location = new System.Drawing.Point(1025, 353);
             this.btnBuyTicket.Name = "btnBuyTicket";
             this.btnBuyTicket.Size = new System.Drawing.Size(163, 62);
             this.btnBuyTicket.TabIndex = 21;
-            this.btnBuyTicket.Text = "Buy ticket for selected concert";
+            this.btnBuyTicket.Text = "Buy ticket with ID";
             this.btnBuyTicket.UseVisualStyleBackColor = true;
             this.btnBuyTicket.Click += new System.EventHandler(this.btnBuyTicket_Click);
             // 
             // lblUsername
             // 
             this.lblUsername.AutoSize = true;
-            this.lblUsername.Location = new System.Drawing.Point(719, 438);
+            this.lblUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsername.Location = new System.Drawing.Point(939, 251);
             this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(83, 20);
+            this.lblUsername.Size = new System.Drawing.Size(0, 39);
             this.lblUsername.TabIndex = 22;
-            this.lblUsername.Text = "Username";
             // 
             // lblBalance
             // 
             this.lblBalance.AutoSize = true;
-            this.lblBalance.Location = new System.Drawing.Point(719, 458);
+            this.lblBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBalance.ForeColor = System.Drawing.Color.LimeGreen;
+            this.lblBalance.Location = new System.Drawing.Point(942, 305);
             this.lblBalance.Name = "lblBalance";
-            this.lblBalance.Size = new System.Drawing.Size(67, 20);
+            this.lblBalance.Size = new System.Drawing.Size(0, 39);
             this.lblBalance.TabIndex = 23;
-            this.lblBalance.Text = "Balance";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 410);
+            this.label5.Location = new System.Drawing.Point(18, 412);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(129, 20);
             this.label5.TabIndex = 25;
             this.label5.Text = "Avaible concerts:";
             // 
-            // gwConcert
+            // listView1
             // 
-            this.gwConcert.AllowUserToDeleteRows = false;
-            this.gwConcert.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gwConcert.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ConcertName,
-            this.ConcertDate,
-            this.ConcertPrice});
-            this.gwConcert.Location = new System.Drawing.Point(18, 438);
-            this.gwConcert.MultiSelect = false;
-            this.gwConcert.Name = "gwConcert";
-            this.gwConcert.Size = new System.Drawing.Size(695, 242);
-            this.gwConcert.TabIndex = 26;
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colConcertName,
+            this.colArtist,
+            this.colCity,
+            this.colStage,
+            this.colDate,
+            this.colPrice,
+            this.colId});
+            this.listView1.HideSelection = false;
+            this.listView1.Location = new System.Drawing.Point(12, 438);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(1176, 231);
+            this.listView1.TabIndex = 26;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
             // 
-            // ConcertName
+            // colConcertName
             // 
-            this.ConcertName.HeaderText = "Concert";
-            this.ConcertName.Name = "ConcertName";
+            this.colConcertName.Text = "Concert name";
             // 
-            // ConcertDate
+            // colArtist
             // 
-            this.ConcertDate.HeaderText = "Date";
-            this.ConcertDate.Name = "ConcertDate";
+            this.colArtist.Text = "Artist";
             // 
-            // ConcertPrice
+            // colCity
             // 
-            this.ConcertPrice.HeaderText = "Pesetas";
-            this.ConcertPrice.Name = "ConcertPrice";
+            this.colCity.Text = "City";
+            // 
+            // colStage
+            // 
+            this.colStage.Text = "Stage";
+            // 
+            // colDate
+            // 
+            this.colDate.Text = "Date";
+            // 
+            // colPrice
+            // 
+            this.colPrice.Text = "Price";
+            // 
+            // colId
+            // 
+            this.colId.Text = "Concert ID";
+            // 
+            // tbConcertId
+            // 
+            this.tbConcertId.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbConcertId.Location = new System.Drawing.Point(946, 353);
+            this.tbConcertId.Name = "tbConcertId";
+            this.tbConcertId.Size = new System.Drawing.Size(73, 62);
+            this.tbConcertId.TabIndex = 27;
+            // 
+            // tabTicketsAndCoupons
+            // 
+            this.tabTicketsAndCoupons.Controls.Add(this.tabTickets);
+            this.tabTicketsAndCoupons.Controls.Add(this.tabCoupons);
+            this.tabTicketsAndCoupons.Location = new System.Drawing.Point(466, 231);
+            this.tabTicketsAndCoupons.Name = "tabTicketsAndCoupons";
+            this.tabTicketsAndCoupons.SelectedIndex = 0;
+            this.tabTicketsAndCoupons.Size = new System.Drawing.Size(476, 201);
+            this.tabTicketsAndCoupons.TabIndex = 28;
+            // 
+            // tabTickets
+            // 
+            this.tabTickets.Controls.Add(this.listBoxTickets);
+            this.tabTickets.Location = new System.Drawing.Point(4, 29);
+            this.tabTickets.Name = "tabTickets";
+            this.tabTickets.Padding = new System.Windows.Forms.Padding(3);
+            this.tabTickets.Size = new System.Drawing.Size(468, 168);
+            this.tabTickets.TabIndex = 0;
+            this.tabTickets.Text = "My tickets";
+            this.tabTickets.UseVisualStyleBackColor = true;
+            // 
+            // tabCoupons
+            // 
+            this.tabCoupons.Controls.Add(this.listBoxCoupons);
+            this.tabCoupons.Location = new System.Drawing.Point(4, 29);
+            this.tabCoupons.Name = "tabCoupons";
+            this.tabCoupons.Padding = new System.Windows.Forms.Padding(3);
+            this.tabCoupons.Size = new System.Drawing.Size(468, 168);
+            this.tabCoupons.TabIndex = 1;
+            this.tabCoupons.Text = "My coupons";
+            this.tabCoupons.UseVisualStyleBackColor = true;
+            // 
+            // listBoxTickets
+            // 
+            this.listBoxTickets.FormattingEnabled = true;
+            this.listBoxTickets.ItemHeight = 20;
+            this.listBoxTickets.Location = new System.Drawing.Point(6, 3);
+            this.listBoxTickets.Name = "listBoxTickets";
+            this.listBoxTickets.Size = new System.Drawing.Size(456, 164);
+            this.listBoxTickets.TabIndex = 0;
+            // 
+            // listBoxCoupons
+            // 
+            this.listBoxCoupons.FormattingEnabled = true;
+            this.listBoxCoupons.ItemHeight = 20;
+            this.listBoxCoupons.Location = new System.Drawing.Point(6, 1);
+            this.listBoxCoupons.Name = "listBoxCoupons";
+            this.listBoxCoupons.Size = new System.Drawing.Size(462, 164);
+            this.listBoxCoupons.TabIndex = 29;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1200, 692);
-            this.Controls.Add(this.gwConcert);
+            this.Controls.Add(this.tabTicketsAndCoupons);
+            this.Controls.Add(this.tbConcertId);
+            this.Controls.Add(this.listView1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.lblBalance);
             this.Controls.Add(this.lblUsername);
@@ -332,7 +421,9 @@
             this.Name = "MainForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.gwConcert)).EndInit();
+            this.tabTicketsAndCoupons.ResumeLayout(false);
+            this.tabTickets.ResumeLayout(false);
+            this.tabCoupons.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -362,10 +453,20 @@
         private System.Windows.Forms.Label lblUsername;
         private System.Windows.Forms.Label lblBalance;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.DataGridView gwConcert;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ConcertName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ConcertDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ConcertPrice;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ColumnHeader colConcertName;
+        private System.Windows.Forms.ColumnHeader colArtist;
+        private System.Windows.Forms.ColumnHeader colCity;
+        private System.Windows.Forms.ColumnHeader colStage;
+        private System.Windows.Forms.ColumnHeader colDate;
+        private System.Windows.Forms.ColumnHeader colPrice;
+        private System.Windows.Forms.ColumnHeader colId;
+        private System.Windows.Forms.TextBox tbConcertId;
+        private System.Windows.Forms.TabControl tabTicketsAndCoupons;
+        private System.Windows.Forms.TabPage tabTickets;
+        private System.Windows.Forms.TabPage tabCoupons;
+        private System.Windows.Forms.ListBox listBoxTickets;
+        private System.Windows.Forms.ListBox listBoxCoupons;
     }
 }
 

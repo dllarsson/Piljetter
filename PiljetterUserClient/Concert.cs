@@ -11,5 +11,8 @@ namespace PiljetterUserClient
         public int Artist_Id { get; set; }
         public int Pesetas { get; set; }
         public bool IsCanceled { get; set; }
+        public string ArtistName { get; set; }
+        public string CityName { get; set; }
+        public string StageName { get; set; }
     }
 }

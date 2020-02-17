@@ -62,6 +62,8 @@ CREATE TABLE Customer
 [CreatedOnDate] DATETIME DEFAULT(GetUTCDate()),
 PRIMARY KEY ([Id])
 )
+ALTER TABLE Customer
+ADD CONSTRAINT Pesetas CHECK (Pesetas > 0);
 
 CREATE TABLE Ticket
 (
@@ -114,6 +116,11 @@ INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id]) VALUES 
 INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id]) VALUES ('Kiss concert!', 2, Convert(varchar(10), GETDATE(),120) , 300, 2);
 INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id]) VALUES ('Queen concert', 1, Convert(varchar(10), GETDATE(),120) , 300, 4);
 
-
+use Piljetter
 
 SelECT * FROM Concert
+SELECT GetDate()
+
+SELECT * FROM Ticket
+
+

@@ -25,28 +25,31 @@ namespace Piljetter
             {
                 using (var c = new SqlConnection(MainForm.connStr))
                 {
+
                     c.Open();
-                    var sql = @"
-                            SELECT [Name]
-                            FROM Concert
-                            WHERE Id = @Id";
-                    var nameCheck = c.Query(sql, new { Id = tbConcertId.Text });
 
-                    if (nameCheck.Count() == 1)
+                    using (var t = c.BeginTransaction())
                     {
-                        sql =
-                            @"UPDATE Concert
-                          SET [IsCanceled] = 1
-                          WHERE [Id] = @Id;";
-                        c.ExecuteScalar<Concert>(sql, new { Id = tbConcertId.Text });
-
-
-                        MessageBox.Show("Concert was succesfully canceled!");
+                        var sql = @"
+                                    UPDATE Concert
+                                    SET IsCanceled = 1
+                                    WHERE Id = @Id
+                                    UPDATE Customer
+                                    SET c.Pesetas = c.Pesetas + sq.TotalPrice
+                                    FROM 
+                                         (SELECT SUM(t.Price) as TotalPrice
+                                          FROM Ticket t
+                                          INNER JOIN Concert con ON t.Concert_Id = con.Id
+                                          WHERE con.id = @Id
+                                          GROUP BY t.Customer_Id) AS sq
+                                    INNER JOIN Ticket t ON c.Id = t.Customer_Id
+                                    INNER JOIN Concert con ON t.Concert_Id = con.Id
+                                    WHERE con.Id = @Id
+                                    ";
+                        c.Execute(sql, new { Id = tbConcertId.Text }, transaction: t);
+                        t.Commit();
                     }
-                    else
-                    {
-                        MessageBox.Show("That ID does not belong to a concert!");
-                    }
+
 
                 }
 

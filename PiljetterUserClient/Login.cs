@@ -43,8 +43,12 @@ namespace PiljetterUserClient
                         MessageBox.Show("Sign in succesful");
                         MainForm.IsLoggedIn = true;
                         
-                        MainForm.UpdateForm();
+                        MainForm.UpdateLoggedInUser();
                         this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("User or password was wrong");
                     }
                 }
             }
