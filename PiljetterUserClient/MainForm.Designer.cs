@@ -61,9 +61,10 @@
             this.tbConcertId = new System.Windows.Forms.TextBox();
             this.tabTicketsAndCoupons = new System.Windows.Forms.TabControl();
             this.tabTickets = new System.Windows.Forms.TabPage();
-            this.tabCoupons = new System.Windows.Forms.TabPage();
             this.listBoxTickets = new System.Windows.Forms.ListBox();
+            this.tabCoupons = new System.Windows.Forms.TabPage();
             this.listBoxCoupons = new System.Windows.Forms.ListBox();
+            this.btnRefreshBalance = new System.Windows.Forms.Button();
             this.tabTicketsAndCoupons.SuspendLayout();
             this.tabTickets.SuspendLayout();
             this.tabCoupons.SuspendLayout();
@@ -357,6 +358,15 @@
             this.tabTickets.Text = "My tickets";
             this.tabTickets.UseVisualStyleBackColor = true;
             // 
+            // listBoxTickets
+            // 
+            this.listBoxTickets.FormattingEnabled = true;
+            this.listBoxTickets.ItemHeight = 20;
+            this.listBoxTickets.Location = new System.Drawing.Point(6, 3);
+            this.listBoxTickets.Name = "listBoxTickets";
+            this.listBoxTickets.Size = new System.Drawing.Size(456, 164);
+            this.listBoxTickets.TabIndex = 0;
+            // 
             // tabCoupons
             // 
             this.tabCoupons.Controls.Add(this.listBoxCoupons);
@@ -368,15 +378,6 @@
             this.tabCoupons.Text = "My coupons";
             this.tabCoupons.UseVisualStyleBackColor = true;
             // 
-            // listBoxTickets
-            // 
-            this.listBoxTickets.FormattingEnabled = true;
-            this.listBoxTickets.ItemHeight = 20;
-            this.listBoxTickets.Location = new System.Drawing.Point(6, 3);
-            this.listBoxTickets.Name = "listBoxTickets";
-            this.listBoxTickets.Size = new System.Drawing.Size(456, 164);
-            this.listBoxTickets.TabIndex = 0;
-            // 
             // listBoxCoupons
             // 
             this.listBoxCoupons.FormattingEnabled = true;
@@ -386,11 +387,22 @@
             this.listBoxCoupons.Size = new System.Drawing.Size(462, 164);
             this.listBoxCoupons.TabIndex = 29;
             // 
+            // btnRefreshBalance
+            // 
+            this.btnRefreshBalance.Location = new System.Drawing.Point(1092, 183);
+            this.btnRefreshBalance.Name = "btnRefreshBalance";
+            this.btnRefreshBalance.Size = new System.Drawing.Size(110, 33);
+            this.btnRefreshBalance.TabIndex = 29;
+            this.btnRefreshBalance.Text = "Refresh";
+            this.btnRefreshBalance.UseVisualStyleBackColor = true;
+            this.btnRefreshBalance.Click += new System.EventHandler(this.btnRefreshBalance_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1200, 692);
+            this.Controls.Add(this.btnRefreshBalance);
             this.Controls.Add(this.tabTicketsAndCoupons);
             this.Controls.Add(this.tbConcertId);
             this.Controls.Add(this.listView1);
@@ -467,6 +479,7 @@
         private System.Windows.Forms.TabPage tabCoupons;
         private System.Windows.Forms.ListBox listBoxTickets;
         private System.Windows.Forms.ListBox listBoxCoupons;
+        private System.Windows.Forms.Button btnRefreshBalance;
     }
 }
 

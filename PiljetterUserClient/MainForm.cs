@@ -204,5 +204,10 @@ namespace PiljetterUserClient
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void btnRefreshBalance_Click(object sender, EventArgs e)
+        {
+            UpdateLoggedInUser();
+        }
     }
 }

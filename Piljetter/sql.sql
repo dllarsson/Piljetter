@@ -74,10 +74,11 @@ CREATE TABLE Ticket
 PRIMARY KEY ([Id])
 )
 
-CREATE TABLE TicketCupon
+CREATE TABLE TicketCoupon
 (
 [Id] INT IDENTITY NOT NULL,
 Customer_Id INT FOREIGN KEY REFERENCES Customer ([Id]) NOT NULL,
+CouponValue INT NOT NULL,
 PRIMARY KEY ([Id])
 )
 
@@ -116,11 +117,17 @@ INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id]) VALUES 
 INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id]) VALUES ('Kiss concert!', 2, Convert(varchar(10), GETDATE(),120) , 300, 2);
 INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id]) VALUES ('Queen concert', 1, Convert(varchar(10), GETDATE(),120) , 300, 4);
 
-use Piljetter
 
 SelECT * FROM Concert
-SELECT GetDate()
 
 SELECT * FROM Ticket
 
+SELECT * FROM TicketCoupon
+
+SELECT Pesetas FROM Customer
+
+SELECT t.*, c.IsCanceled AS Canceled, cu.FirstName AS Name
+FROM Ticket t
+INNER JOIN Concert c ON c.Id = t.Concert_Id 
+INNER JOIN Customer cu ON cu.Id = t.Customer_Id
 
