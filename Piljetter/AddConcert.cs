@@ -21,22 +21,20 @@ namespace Piljetter
 
         private void btnAddConcert_Click(object sender, EventArgs e)
         {
-            int price = 0;
-            if (listBoxCity.SelectedIndex == -1 || listBoxStage.SelectedIndex == -1 ||
-                listBoxArtist.SelectedIndex == -1 || tbTicketPrice.Text == "" || !int.TryParse(tbTicketPrice.Text, out price))
-            {
-                MessageBox.Show("You must select all categories");
-            }
-            else
-            {
+            
                 try
                 {
                     using (var c = new SqlConnection(MainForm.connStr))
                     {
                         c.Open();
-                        var sql =@"
-                        INSERT INTO Concert ([Name], [Date], [Stage_Id], [Artist_Id], Pesetas) 
-                        VALUES (@Name, @date, (SELECT Id FROM Stage WHERE Name = @StageName), (SELECT Id FROM Artist WHERE Name = @ArtistName), @Pesetas);";
+                        var sql = @"
+                        INSERT INTO Concert ([Name], [Date], [Stage_Id], [Artist_Id], Pesetas, AvaibleTickets) 
+                        VALUES (@Name, @date, (SELECT Id FROM Stage WHERE Name = @StageName), 
+                               (SELECT Id FROM Artist WHERE Name = @ArtistName), @Pesetas, (SELECT MaxVisitors
+                                                                                            FROM Stage
+                                                                                            WHERE Id = (SELECT Id 
+                                                                                                        FROM Stage 
+                                                                                                        WHERE Name = @StageName)));";
                         c.Execute(sql, new
                         {
                             Name = tbConcertName.Text,
@@ -56,8 +54,6 @@ namespace Piljetter
                     MessageBox.Show(ex.Message);
                     
                 }
-            }
-            if (!int.TryParse(tbTicketPrice.Text, out price)) MessageBox.Show("Price must be only digits");
 
         }
 

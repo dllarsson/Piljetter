@@ -65,6 +65,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnLogOut = new System.Windows.Forms.Button();
             this.cbCoupon = new System.Windows.Forms.CheckBox();
+            this.colAvaibleTickets = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabTicketsAndCoupons.SuspendLayout();
             this.tabTickets.SuspendLayout();
             this.tabCoupons.SuspendLayout();
@@ -266,6 +267,7 @@
             this.colStage,
             this.colDate,
             this.colPrice,
+            this.colAvaibleTickets,
             this.colId});
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(12, 438);
@@ -406,6 +408,11 @@
             this.cbCoupon.Text = "Buy ticket using coupon";
             this.cbCoupon.UseVisualStyleBackColor = true;
             // 
+            // colAvaibleTickets
+            // 
+            this.colAvaibleTickets.DisplayIndex = 7;
+            this.colAvaibleTickets.Text = "Tickets left";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -485,6 +492,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnLogOut;
         private System.Windows.Forms.CheckBox cbCoupon;
+        private System.Windows.Forms.ColumnHeader colAvaibleTickets;
     }
 }
 

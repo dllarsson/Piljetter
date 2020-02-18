@@ -37,8 +37,10 @@ namespace PiljetterUserClient
             listView1.Columns[2].Width = 170;
             listView1.Columns[3].Width = 220;
             listView1.Columns[4].Width = 120;
-            listView1.Columns[5].Width = 170;
+            listView1.Columns[5].Width = 80;
             listView1.Columns[6].Width = 120;
+            listView1.Columns[7].Width = 120;
+
 
             if (IsLoggedIn)
             {
@@ -142,6 +144,7 @@ namespace PiljetterUserClient
                             item.SubItems.Add(concert.StageName);
                             item.SubItems.Add(concert.Date.ToString("yyyy/MM/dd"));
                             item.SubItems.Add(concert.Pesetas.ToString());
+                            item.SubItems.Add(concert.AvaibleTickets.ToString());
                             item.SubItems.Add(concert.Id.ToString());
                             listView1.Items.Add(item);
 
@@ -196,17 +199,20 @@ namespace PiljetterUserClient
                     using (var t = conn.BeginTransaction())
                     {
                         var sql = "";
-                        if (cbCoupon.Checked)
+                        
+                        if (!(bool)conn.ExecuteScalar("SELECT IsCanceled FROM Concert WHERE Id = @ConcertId", new { ConcertId = tbConcertId.Text }, transaction: t))
                         {
-                            sql = @"
+                            if (cbCoupon.Checked)
+                            {
+                                sql = @"
                                     SELECT * FROM TicketCoupon t WHERE t.Customer_Id = @CustomerId         
                                     ";
 
-                            var coupons = conn.Query(sql, new { CustomerId = logedInUser.Id }, transaction: t);
+                                var coupons = conn.Query(sql, new { CustomerId = logedInUser.Id }, transaction: t);
 
-                            if (coupons.Count() > 0)
-                            {
-                                sql = @"
+                                if (coupons.Count() > 0)
+                                {
+                                    sql = @"
                                 INSERT INTO Ticket (Concert_Id, Customer_Id, Price)
                                 VALUES (@ConcertId, @CustomerId, 0);
                                 WITH tc AS 
@@ -217,23 +223,33 @@ namespace PiljetterUserClient
                                 	ORDER BY t.ExpiryDate
                                 )
                                 DELETE FROM tc
+                                UPDATE c
+                                SET c.AvaibleTickets = AvaibleTickets -1
+                                FROM Concert c
+                                WHERE c.Id = @ConcertId
                                 ";
-                            }
-                            
+                                }
 
-                        }
-                        else
-                        {
-                            sql = @"
+
+                            }
+                            else
+                            {
+                                sql = @"
                                 INSERT INTO Ticket (Concert_Id, Customer_Id, Price)
                                 VALUES (@ConcertId, @CustomerId, (SELECT Pesetas FROM Concert WHERE Id = @ConcertId))
                                 UPDATE Customer
                                 SET Pesetas = Pesetas - (SELECT Pesetas FROM Concert WHERE Id = @ConcertId)
                                 WHERE Id = @CustomerId
+                                UPDATE c
+                                SET c.AvaibleTickets = AvaibleTickets -1
+                                FROM Concert c
+                                WHERE c.Id = @ConcertId
                                 ";
-                        }
-
+                            }
                         conn.Execute(sql, new { ConcertId = tbConcertId.Text, CustomerId = logedInUser.Id }, transaction: t);
+                        }
+                        
+
                         t.Commit();
                     }
 
@@ -269,7 +285,7 @@ namespace PiljetterUserClient
                             AND c.Id = t.Customer_Id;";
                 var tickets = conn.Query<Customer>(sql, new { Id = logedInUser.Id });
                 sql = @"
-                            SELECT tc.Id as CouponId, con.Name AS ConcertName
+                            SELECT tc.Id as CouponId, con.Name AS ConcertName, tc.ExpiryDate
                             FROM TicketCoupon tc
                             INNER JOIN Customer c ON tc.Customer_Id = c.Id
                             INNER JOIN Concert con ON tc.Concert_Id = con.Id
@@ -283,7 +299,7 @@ namespace PiljetterUserClient
                 }
                 foreach (var coupon in coupons)
                 {
-                    listBoxCoupons.Items.Add("ID: " + coupon.CouponId + " Concert: " + coupon.ConcertName + " Expiry date: ");
+                    listBoxCoupons.Items.Add("ID: " + coupon.CouponId + " Concert: " + coupon.ConcertName + " Expiry date: " + coupon.ExpiryDate);
 
                 }
             }
