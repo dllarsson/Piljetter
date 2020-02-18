@@ -45,13 +45,13 @@ namespace Piljetter
                                                 WHERE con.Id = @Id
                                                 GROUP BY t.Customer_Id) AS sq ON sq.Customer_Id = c.Id
                                     --
-                                    INSERT INTO TicketCoupon (Customer_Id, Concert_Id)
-									SELECT tc.Customer_Id, @Id
-									FROM (SELECT t.Customer_Id as Customer_Id
+                                    INSERT INTO TicketCoupon (Customer_Id, Concert_Id, ExpiryDate)
+									SELECT tc.Customer_Id, @Id, DATEADD(day, 30, tc.Date)
+									FROM (SELECT t.Customer_Id as Customer_Id, con.Date as Date
                                           FROM Ticket t
                                           INNER JOIN Concert con ON t.Concert_Id = con.Id
                                           WHERE con.Id = @Id
-                                          GROUP BY t.Customer_Id, t.Id) as tc
+                                          GROUP BY t.Customer_Id, t.Id, con.Date) as tc
                                     --
                                     DELETE t 
 									FROM Ticket t

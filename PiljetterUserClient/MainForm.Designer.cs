@@ -64,6 +64,7 @@
             this.btnRefreshBalance = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnLogOut = new System.Windows.Forms.Button();
+            this.cbCoupon = new System.Windows.Forms.CheckBox();
             this.tabTicketsAndCoupons.SuspendLayout();
             this.tabTickets.SuspendLayout();
             this.tabCoupons.SuspendLayout();
@@ -220,7 +221,7 @@
             // 
             // btnBuyTicket
             // 
-            this.btnBuyTicket.Location = new System.Drawing.Point(1080, 364);
+            this.btnBuyTicket.Location = new System.Drawing.Point(1038, 344);
             this.btnBuyTicket.Name = "btnBuyTicket";
             this.btnBuyTicket.Size = new System.Drawing.Size(108, 62);
             this.btnBuyTicket.TabIndex = 21;
@@ -305,7 +306,7 @@
             // tbConcertId
             // 
             this.tbConcertId.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbConcertId.Location = new System.Drawing.Point(1001, 364);
+            this.tbConcertId.Location = new System.Drawing.Point(959, 344);
             this.tbConcertId.Name = "tbConcertId";
             this.tbConcertId.Size = new System.Drawing.Size(73, 62);
             this.tbConcertId.TabIndex = 27;
@@ -395,11 +396,22 @@
             this.btnLogOut.UseVisualStyleBackColor = true;
             this.btnLogOut.Click += new System.EventHandler(this.btnLogOut_Click);
             // 
+            // cbCoupon
+            // 
+            this.cbCoupon.AutoSize = true;
+            this.cbCoupon.Location = new System.Drawing.Point(959, 408);
+            this.cbCoupon.Name = "cbCoupon";
+            this.cbCoupon.Size = new System.Drawing.Size(196, 24);
+            this.cbCoupon.TabIndex = 32;
+            this.cbCoupon.Text = "Buy ticket using coupon";
+            this.cbCoupon.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1201, 692);
+            this.Controls.Add(this.cbCoupon);
             this.Controls.Add(this.btnLogOut);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnRefreshBalance);
@@ -472,6 +484,7 @@
         private System.Windows.Forms.Button btnRefreshBalance;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnLogOut;
+        private System.Windows.Forms.CheckBox cbCoupon;
     }
 }
 
