@@ -39,12 +39,32 @@ namespace PiljetterUserClient
             listView1.Columns[5].Width = 170;
             listView1.Columns[6].Width = 120;
 
+            if (IsLoggedIn)
+            {
+                foreach (Control c in this.Controls)
+                {
+                    c.Enabled = true;
+                }
+            }
+            else
+            {
+                foreach (Control c in this.Controls)
+                {
+                    c.Enabled = false;
+                }
+            }
 
+            this.btnLogin.Enabled = true;
+            this.btnSingUp.Enabled = true;
         }
 
         public void UpdateLoggedInUser()
         {
+            btnLogin.Enabled = false;
+            
             listBoxTickets.Items.Clear();
+            listBoxCoupons.Items.Clear();
+            MainForm_Load(this, new EventArgs());
             using (var conn = new SqlConnection(connStr))
             {
                 conn.Open();
@@ -55,15 +75,29 @@ namespace PiljetterUserClient
                             INNER JOIN Concert con ON t.Concert_Id = con.Id
                             WHERE c.Id = @Id
                             AND c.Id = t.Customer_Id;";
-                var customers = conn.Query<Customer>(sql, new { Id = logedInUser.Id });
-                foreach (var customer in customers)
+                var tickets = conn.Query<Customer>(sql, new { Id = logedInUser.Id });
+                sql = @"
+                            SELECT tc.Id as CouponId, con.Name AS ConcertName
+                            FROM TicketCoupon tc
+                            INNER JOIN Customer c ON tc.Customer_Id = c.Id
+                            INNER JOIN Concert con ON tc.Concert_Id = con.Id
+                            WHERE c.Id = @Id";
+                var coupons = conn.Query<Customer>(sql, new { Id = logedInUser.Id });
+                foreach (var ticket in tickets)
                 {
-                    logedInUser.Pesetas = customer.Pesetas;
-                    listBoxTickets.Items.Add("ID: " + customer.TicketId + "  Concert: " + customer.ConcertName);
+                    logedInUser.Pesetas = ticket.Pesetas;
+                    listBoxTickets.Items.Add("ID: " + ticket.TicketId + "  Concert: " + ticket.ConcertName);
+
                 }
-                
+                foreach (var coupon in coupons)
+                {
+                    listBoxCoupons.Items.Add("ID: " + coupon.CouponId + " Concert: " + coupon.ConcertName + " Expiry date: ");
+
+                }
+
             }
-                lblUsername.Text = "Username: " + logedInUser.Username;
+
+            lblUsername.Text = "Username: " + logedInUser.Username;
             lblBalance.Text = "Pesetas: " + logedInUser.Pesetas.ToString();
         }
 
@@ -208,6 +242,17 @@ namespace PiljetterUserClient
         private void btnRefreshBalance_Click(object sender, EventArgs e)
         {
             UpdateLoggedInUser();
+        }
+
+        private void btnLogOut_Click(object sender, EventArgs e)
+        {
+            btnLogin.Enabled = true;
+            IsLoggedIn = false;
+            listBoxCoupons.Items.Clear();
+            listBoxTickets.Items.Clear();
+            listView1.Items.Clear();
+            this.btnLogOut.Hide();
+            Update();
         }
     }
 }

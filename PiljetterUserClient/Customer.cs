@@ -14,5 +14,6 @@ namespace PiljetterUserClient
         public DateTime CreatedOnDate { get; set; }
         public int TicketId { get; set; }
         public string ConcertName { get; set; }
+        public string CouponId { get; set; }
     }
 }

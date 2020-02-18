@@ -40,7 +40,7 @@ namespace PiljetterUserClient
                         {
                             MainForm.logedInUser = cust;
                         }
-                        MessageBox.Show("Sign in succesful");
+                        
                         MainForm.IsLoggedIn = true;
                         
                         MainForm.UpdateLoggedInUser();

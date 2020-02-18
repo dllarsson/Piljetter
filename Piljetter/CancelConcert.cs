@@ -35,6 +35,7 @@ namespace Piljetter
                                     UPDATE Concert
                                     SET IsCanceled = 1
                                     WHERE Id = @Id
+                                    --
                                     UPDATE c
                                     SET c.Pesetas = c.Pesetas + sq.TotalPrice
                                     FROM Customer c
@@ -43,16 +44,15 @@ namespace Piljetter
                                                 INNER JOIN Concert con ON t.Concert_Id = con.Id
                                                 WHERE con.Id = @Id
                                                 GROUP BY t.Customer_Id) AS sq ON sq.Customer_Id = c.Id
-									INNER JOIN Ticket t ON t.Customer_Id = sq.Customer_Id		
-                                    INNER JOIN Concert con ON t.Concert_Id = con.Id
-                                    WHERE con.Id = @Id
-                                    INSERT INTO TicketCoupon (CouponValue, Customer_Id) 
-									SELECT tc.Tickets, tc.Customer_Id
-									FROM (SELECT Count(*)AS Tickets, t.Customer_Id as Customer_Id
+                                    --
+                                    INSERT INTO TicketCoupon (Customer_Id, Concert_Id)
+									SELECT tc.Customer_Id, @Id
+									FROM (SELECT t.Customer_Id as Customer_Id
                                           FROM Ticket t
                                           INNER JOIN Concert con ON t.Concert_Id = con.Id
                                           WHERE con.Id = @Id
-                                          GROUP BY t.Customer_Id) as tc
+                                          GROUP BY t.Customer_Id, t.Id) as tc
+                                    --
                                     DELETE t 
 									FROM Ticket t
                                     INNER JOIN (SELECT c.Id AS Concert_Id
@@ -66,6 +66,8 @@ namespace Piljetter
 
                         t.Commit();
                     }
+
+                    this.Close();
 
 
                 }
