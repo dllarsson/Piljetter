@@ -30,7 +30,7 @@ namespace PiljetterUserClient
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            
+
             radioButton3.Checked = true;
             listView1.Columns[0].Width = 170;
             listView1.Columns[1].Width = 170;
@@ -48,7 +48,7 @@ namespace PiljetterUserClient
                 {
                     c.Enabled = true;
                 }
-                    updateTicketsAndCoupons();
+                updateTicketsAndCoupons();
             }
             else
             {
@@ -199,9 +199,7 @@ namespace PiljetterUserClient
                     using (var t = conn.BeginTransaction())
                     {
                         var sql = "";
-                        
-                        if (!(bool)conn.ExecuteScalar("SELECT IsCanceled FROM Concert WHERE Id = @ConcertId", new { ConcertId = tbConcertId.Text }, transaction: t))
-                        {
+
                             if (cbCoupon.Checked)
                             {
                                 sql = @"
@@ -213,21 +211,28 @@ namespace PiljetterUserClient
                                 if (coupons.Count() > 0)
                                 {
                                     sql = @"
-                                INSERT INTO Ticket (Concert_Id, Customer_Id, Price)
-                                VALUES (@ConcertId, @CustomerId, 0);
-                                WITH tc AS 
-                                (
-                                	SELECT TOP (1) *
-                                	FROM TicketCoupon t
-                                	WHERE t.Customer_Id = @CustomerId
-                                	ORDER BY t.ExpiryDate
-                                )
-                                DELETE FROM tc
-                                UPDATE c
-                                SET c.AvaibleTickets = AvaibleTickets -1
-                                FROM Concert c
-                                WHERE c.Id = @ConcertId
-                                ";
+                                        WITH sq AS 
+                                        (
+                                             SELECT c.Id AS CustomerId, con.Id AS ConcertId
+                                             FROM Customer c, Concert con
+                                             WHERE con.Id = @ConcertId AND c.Id = @CustomerId AND con.IsCanceled = 0
+                                        )
+                                        INSERT INTO Ticket (Customer_Id, Concert_Id, Price)
+                                        SELECT sq.CustomerId, sq.ConcertId, 0
+                                        FROM sq;
+                                        WITH tc AS 
+                                        (
+                                        	SELECT TOP (1) *
+                                        	FROM TicketCoupon t
+                                        	WHERE t.Customer_Id = @CustomerId
+                                        	ORDER BY t.ExpiryDate
+                                        )
+                                        DELETE FROM tc
+                                        UPDATE c
+                                        SET c.AvaibleTickets = AvaibleTickets -1
+                                        FROM Concert c
+                                        WHERE c.Id = @ConcertId
+                                        ";
                                 }
 
 
@@ -235,8 +240,15 @@ namespace PiljetterUserClient
                             else
                             {
                                 sql = @"
-                                INSERT INTO Ticket (Concert_Id, Customer_Id, Price)
-                                VALUES (@ConcertId, @CustomerId, (SELECT Pesetas FROM Concert WHERE Id = @ConcertId))
+                                WITH sq AS 
+                                (
+                                      SELECT c.Id AS CustomerId, con.Id AS ConcertId
+                                      FROM Customer c, Concert con
+                                      WHERE con.Id = @ConcertId AND c.Id = @CustomerId AND con.IsCanceled = 0
+                                 )
+                                INSERT INTO Ticket (Customer_Id, Concert_Id, Price)
+                                SELECT sq.CustomerId, sq.ConcertId, (SELECT Pesetas FROM Concert WHERE Id = @ConcertId)
+                                FROM sq;
                                 UPDATE Customer
                                 SET Pesetas = Pesetas - (SELECT Pesetas FROM Concert WHERE Id = @ConcertId)
                                 WHERE Id = @CustomerId
@@ -246,9 +258,8 @@ namespace PiljetterUserClient
                                 WHERE c.Id = @ConcertId
                                 ";
                             }
-                        conn.Execute(sql, new { ConcertId = tbConcertId.Text, CustomerId = logedInUser.Id }, transaction: t);
-                        }
-                        
+                            conn.Execute(sql, new { ConcertId = tbConcertId.Text, CustomerId = logedInUser.Id }, transaction: t);
+
 
                         t.Commit();
                     }
@@ -268,9 +279,9 @@ namespace PiljetterUserClient
         {
             UpdateLoggedInUser();
             updateTicketsAndCoupons();
-            
+
         }
-        private  void updateTicketsAndCoupons()
+        private void updateTicketsAndCoupons()
         {
             using (var conn = new SqlConnection(connStr))
             {

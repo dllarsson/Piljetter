@@ -35,7 +35,6 @@ namespace Piljetter
                                     UPDATE Concert
                                     SET IsCanceled = 1
                                     WHERE Id = @Id
-                                    --
                                     UPDATE c
                                     SET c.Pesetas = c.Pesetas + sq.TotalPrice
                                     FROM Customer c
@@ -44,7 +43,6 @@ namespace Piljetter
                                                 INNER JOIN Concert con ON t.Concert_Id = con.Id
                                                 WHERE con.Id = @Id
                                                 GROUP BY t.Customer_Id) AS sq ON sq.Customer_Id = c.Id
-                                    --
                                     INSERT INTO TicketCoupon (Customer_Id, Concert_Id, ExpiryDate)
 									SELECT tc.Customer_Id, @Id, DATEADD(day, 30, tc.Date)
 									FROM (SELECT t.Customer_Id as Customer_Id, con.Date as Date
@@ -52,7 +50,6 @@ namespace Piljetter
                                           INNER JOIN Concert con ON t.Concert_Id = con.Id
                                           WHERE con.Id = @Id
                                           GROUP BY t.Customer_Id, t.Id, con.Date) as tc
-                                    --
                                     DELETE t 
 									FROM Ticket t
                                     INNER JOIN (SELECT c.Id AS Concert_Id
