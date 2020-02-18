@@ -30,6 +30,7 @@ namespace PiljetterUserClient
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            
             radioButton3.Checked = true;
             listView1.Columns[0].Width = 170;
             listView1.Columns[1].Width = 170;
@@ -45,6 +46,7 @@ namespace PiljetterUserClient
                 {
                     c.Enabled = true;
                 }
+                    updateTicketsAndCoupons();
             }
             else
             {
@@ -68,34 +70,7 @@ namespace PiljetterUserClient
             using (var conn = new SqlConnection(connStr))
             {
                 conn.Open();
-
-                var sql = @"
-                            SELECT c.Pesetas, t.Id as TicketId, con.Name as ConcertName
-                            FROM Customer c
-                            INNER JOIN Ticket t ON c.Id = t.Customer_Id
-                            INNER JOIN Concert con ON t.Concert_Id = con.Id
-                            WHERE c.Id = @Id
-                            AND c.Id = t.Customer_Id;";
-                var tickets = conn.Query<Customer>(sql, new { Id = logedInUser.Id });
-                sql = @"
-                            SELECT tc.Id as CouponId, con.Name AS ConcertName
-                            FROM TicketCoupon tc
-                            INNER JOIN Customer c ON tc.Customer_Id = c.Id
-                            INNER JOIN Concert con ON tc.Concert_Id = con.Id
-                            WHERE c.Id = @Id";
-                
-                var coupons = conn.Query<Customer>(sql, new { Id = logedInUser.Id });
-                foreach (var ticket in tickets)
-                {
-                    listBoxTickets.Items.Add("ID: " + ticket.TicketId + "  Concert: " + ticket.ConcertName);
-
-                }
-                foreach (var coupon in coupons)
-                {
-                    listBoxCoupons.Items.Add("ID: " + coupon.CouponId + " Concert: " + coupon.ConcertName + " Expiry date: ");
-
-                }
-                sql = @"SELECT Pesetas FROM Customer WHERE Id = @Id";
+                var sql = @"SELECT Pesetas FROM Customer WHERE Id = @Id";
                 var pesetas = conn.ExecuteScalar(sql, new { Id = logedInUser.Id });
                 logedInUser.Pesetas = (int)pesetas;
 
@@ -276,6 +251,42 @@ namespace PiljetterUserClient
         private void btnRefreshBalance_Click(object sender, EventArgs e)
         {
             UpdateLoggedInUser();
+            updateTicketsAndCoupons();
+            
+        }
+        private  void updateTicketsAndCoupons()
+        {
+            using (var conn = new SqlConnection(connStr))
+            {
+                conn.Open();
+
+                var sql = @"
+                            SELECT c.Pesetas, t.Id as TicketId, con.Name as ConcertName
+                            FROM Customer c
+                            INNER JOIN Ticket t ON c.Id = t.Customer_Id
+                            INNER JOIN Concert con ON t.Concert_Id = con.Id
+                            WHERE c.Id = @Id
+                            AND c.Id = t.Customer_Id;";
+                var tickets = conn.Query<Customer>(sql, new { Id = logedInUser.Id });
+                sql = @"
+                            SELECT tc.Id as CouponId, con.Name AS ConcertName
+                            FROM TicketCoupon tc
+                            INNER JOIN Customer c ON tc.Customer_Id = c.Id
+                            INNER JOIN Concert con ON tc.Concert_Id = con.Id
+                            WHERE c.Id = @Id";
+
+                var coupons = conn.Query<Customer>(sql, new { Id = logedInUser.Id });
+                foreach (var ticket in tickets)
+                {
+                    listBoxTickets.Items.Add("ID: " + ticket.TicketId + "  Concert: " + ticket.ConcertName);
+
+                }
+                foreach (var coupon in coupons)
+                {
+                    listBoxCoupons.Items.Add("ID: " + coupon.CouponId + " Concert: " + coupon.ConcertName + " Expiry date: ");
+
+                }
+            }
         }
 
         private void btnLogOut_Click(object sender, EventArgs e)
