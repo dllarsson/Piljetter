@@ -234,9 +234,8 @@ namespace PiljetterUserClient
                                         WHERE c.Id = @ConcertId
                                         ";
                                 }
-
-
                             }
+
                             else
                             {
                                 sql = @"
@@ -325,6 +324,27 @@ namespace PiljetterUserClient
             listView1.Items.Clear();
             this.btnLogOut.Hide();
             Update();
+        }
+
+        private void btnBuyPesetas_Click(object sender, EventArgs e)
+        {
+            using (var conn = new SqlConnection(connStr))
+            {
+                try
+                {
+
+
+                    conn.Open();
+                    conn.Execute(@"UPDATE c
+                               SET c.Pesetas = c.Pesetas + @Pesetas
+                               FROM Customer c
+                               WHERE c.Id = @Id", new { Id = logedInUser.Id, Pesetas = tbBuyPesetas.Text });
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
     }
 }

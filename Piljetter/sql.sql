@@ -36,6 +36,7 @@ CREATE TABLE Concert
 [Date] DATETIME NOT NULL,
 [IsCanceled] BIT NOT NULL DEFAULT(0),
 [Pesetas] INT NOT NULL,
+AvaibleTickets INT NOT NULL,
 [Stage_Id] INT FOREIGN KEY REFERENCES Stage([Id]) NOT NULL,
 [Artist_Id] INT FOREIGN KEY REFERENCES Artist([Id]) NOT NULL,
 PRIMARY KEY (Id)
@@ -78,7 +79,8 @@ CREATE TABLE TicketCoupon
 (
 [Id] INT IDENTITY NOT NULL,
 Customer_Id INT FOREIGN KEY REFERENCES Customer ([Id]) NOT NULL,
-CouponValue INT NOT NULL,
+Concert_Id INT FOREIGN KEY REFERENCES Concert ([Id]),
+ExpiryDate DATE NOT NULL,
 PRIMARY KEY ([Id])
 )
 
@@ -112,10 +114,10 @@ INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], 
 INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], [Pesetas]) VALUES ('Jesper', 'Larsson', 'jesper@gmail.com', 'Jeppe', '123', 10000);
 INSERT INTO Customer ([FirstName], [LastName], [Email], [Username], [Password], [Pesetas]) VALUES ('Johan', 'Bernhardsson', 'johan@gmail.com', 'Juan', '123', 10000);
 
-INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id]) VALUES ('Green day concert', 4, Convert(varchar(10), GETDATE(),120) , 300, 3);
-INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id]) VALUES ('Abba concert', 3, Convert(varchar(10), GETDATE(),120) , 300, 1);
-INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id]) VALUES ('Kiss concert!', 2, Convert(varchar(10), GETDATE(),120) , 300, 2);
-INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id]) VALUES ('Queen concert', 1, Convert(varchar(10), GETDATE(),120) , 300, 4);
+INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id], AvaibleTickets) VALUES ('Green day concert', 4, Convert(varchar(10), GETDATE(),120) , 300, 3,11);
+INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id], AvaibleTickets) VALUES ('Abba concert', 3, Convert(varchar(10), GETDATE(),120) , 300, 1,33);
+INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id], AvaibleTickets) VALUES ('Kiss concert!', 2, Convert(varchar(10), GETDATE(),120) , 300, 2,55);
+INSERT INTO Concert ([Name], [Artist_Id], [Date], [Pesetas], [Stage_Id], AvaibleTickets) VALUES ('Queen concert', 1, Convert(varchar(10), GETDATE(),120) , 300, 4,9);
 
 
 SelECT * FROM Concert
@@ -130,4 +132,23 @@ SELECT t.*, c.IsCanceled AS Canceled, cu.FirstName AS Name
 FROM Ticket t
 INNER JOIN Concert c ON c.Id = t.Concert_Id 
 INNER JOIN Customer cu ON cu.Id = t.Customer_Id
+GO
+CREATE TRIGGER TriggerRollback
+ON Ticket
+FOR INSERT
+AS 
+IF NOT EXISTS 
+	(
+		SELECT t.*
+		FROM Ticket t
+		INNER JOIN inserted i ON i.Id = t.Id
+		WHERE t.Concert_Id = i.Concert_Id AND t.Customer_Id = i.Customer_Id
+	)
+BEGIN 
+	RAISERROR('Concert is canceled!', 10, 1);
+	ROLLBACK
+END
 
+
+
+--SELECT TriggerRollback

@@ -54,6 +54,7 @@
             this.colStage = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colAvaibleTickets = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tbConcertId = new System.Windows.Forms.TextBox();
             this.tabTicketsAndCoupons = new System.Windows.Forms.TabControl();
@@ -65,7 +66,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnLogOut = new System.Windows.Forms.Button();
             this.cbCoupon = new System.Windows.Forms.CheckBox();
-            this.colAvaibleTickets = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnBuyPesetas = new System.Windows.Forms.Button();
+            this.tbBuyPesetas = new System.Windows.Forms.TextBox();
             this.tabTicketsAndCoupons.SuspendLayout();
             this.tabTickets.SuspendLayout();
             this.tabCoupons.SuspendLayout();
@@ -97,7 +99,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(424, 231);
+            this.label1.Location = new System.Drawing.Point(430, 374);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(87, 20);
@@ -107,7 +109,7 @@
             // TbSearchCity
             // 
             this.TbSearchCity.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TbSearchCity.Location = new System.Drawing.Point(426, 256);
+            this.TbSearchCity.Location = new System.Drawing.Point(432, 399);
             this.TbSearchCity.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.TbSearchCity.Name = "TbSearchCity";
             this.TbSearchCity.Size = new System.Drawing.Size(337, 35);
@@ -115,7 +117,7 @@
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(770, 256);
+            this.btnSearch.Location = new System.Drawing.Point(776, 399);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(107, 170);
             this.btnSearch.TabIndex = 4;
@@ -126,7 +128,7 @@
             // tbSearchArtists
             // 
             this.tbSearchArtists.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbSearchArtists.Location = new System.Drawing.Point(426, 323);
+            this.tbSearchArtists.Location = new System.Drawing.Point(432, 466);
             this.tbSearchArtists.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbSearchArtists.Name = "tbSearchArtists";
             this.tbSearchArtists.Size = new System.Drawing.Size(337, 35);
@@ -135,7 +137,7 @@
             // TbSearchArtist
             // 
             this.TbSearchArtist.AutoSize = true;
-            this.TbSearchArtist.Location = new System.Drawing.Point(422, 297);
+            this.TbSearchArtist.Location = new System.Drawing.Point(428, 440);
             this.TbSearchArtist.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.TbSearchArtist.Name = "TbSearchArtist";
             this.TbSearchArtist.Size = new System.Drawing.Size(99, 20);
@@ -145,7 +147,7 @@
             // tbSearchStages
             // 
             this.tbSearchStages.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbSearchStages.Location = new System.Drawing.Point(426, 391);
+            this.tbSearchStages.Location = new System.Drawing.Point(432, 534);
             this.tbSearchStages.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbSearchStages.Name = "tbSearchStages";
             this.tbSearchStages.Size = new System.Drawing.Size(337, 35);
@@ -154,7 +156,7 @@
             // tbSearchStage
             // 
             this.tbSearchStage.AutoSize = true;
-            this.tbSearchStage.Location = new System.Drawing.Point(422, 365);
+            this.tbSearchStage.Location = new System.Drawing.Point(428, 508);
             this.tbSearchStage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.tbSearchStage.Name = "tbSearchStage";
             this.tbSearchStage.Size = new System.Drawing.Size(104, 20);
@@ -222,7 +224,7 @@
             // 
             // btnBuyTicket
             // 
-            this.btnBuyTicket.Location = new System.Drawing.Point(1038, 344);
+            this.btnBuyTicket.Location = new System.Drawing.Point(1076, 492);
             this.btnBuyTicket.Name = "btnBuyTicket";
             this.btnBuyTicket.Size = new System.Drawing.Size(108, 62);
             this.btnBuyTicket.TabIndex = 21;
@@ -252,7 +254,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(18, 412);
+            this.label5.Location = new System.Drawing.Point(24, 555);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(129, 20);
             this.label5.TabIndex = 25;
@@ -270,7 +272,7 @@
             this.colAvaibleTickets,
             this.colId});
             this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(12, 438);
+            this.listView1.Location = new System.Drawing.Point(12, 596);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(1176, 231);
             this.listView1.TabIndex = 26;
@@ -301,6 +303,10 @@
             // 
             this.colPrice.Text = "Price";
             // 
+            // colAvaibleTickets
+            // 
+            this.colAvaibleTickets.Text = "Tickets left";
+            // 
             // colId
             // 
             this.colId.Text = "Concert ID";
@@ -308,7 +314,7 @@
             // tbConcertId
             // 
             this.tbConcertId.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbConcertId.Location = new System.Drawing.Point(959, 344);
+            this.tbConcertId.Location = new System.Drawing.Point(997, 492);
             this.tbConcertId.Name = "tbConcertId";
             this.tbConcertId.Size = new System.Drawing.Size(73, 62);
             this.tbConcertId.TabIndex = 27;
@@ -317,7 +323,7 @@
             // 
             this.tabTicketsAndCoupons.Controls.Add(this.tabTickets);
             this.tabTicketsAndCoupons.Controls.Add(this.tabCoupons);
-            this.tabTicketsAndCoupons.Location = new System.Drawing.Point(426, 9);
+            this.tabTicketsAndCoupons.Location = new System.Drawing.Point(422, 18);
             this.tabTicketsAndCoupons.Name = "tabTicketsAndCoupons";
             this.tabTicketsAndCoupons.SelectedIndex = 0;
             this.tabTicketsAndCoupons.Size = new System.Drawing.Size(673, 201);
@@ -365,7 +371,7 @@
             // 
             // btnRefreshBalance
             // 
-            this.btnRefreshBalance.Location = new System.Drawing.Point(1096, 41);
+            this.btnRefreshBalance.Location = new System.Drawing.Point(1101, 50);
             this.btnRefreshBalance.Name = "btnRefreshBalance";
             this.btnRefreshBalance.Size = new System.Drawing.Size(83, 162);
             this.btnRefreshBalance.TabIndex = 29;
@@ -381,7 +387,7 @@
             this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.radioButton3);
-            this.groupBox1.Location = new System.Drawing.Point(12, 220);
+            this.groupBox1.Location = new System.Drawing.Point(18, 363);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(404, 212);
             this.groupBox1.TabIndex = 30;
@@ -401,23 +407,37 @@
             // cbCoupon
             // 
             this.cbCoupon.AutoSize = true;
-            this.cbCoupon.Location = new System.Drawing.Point(959, 408);
+            this.cbCoupon.Location = new System.Drawing.Point(997, 556);
             this.cbCoupon.Name = "cbCoupon";
             this.cbCoupon.Size = new System.Drawing.Size(196, 24);
             this.cbCoupon.TabIndex = 32;
             this.cbCoupon.Text = "Buy ticket using coupon";
             this.cbCoupon.UseVisualStyleBackColor = true;
             // 
-            // colAvaibleTickets
+            // btnBuyPesetas
             // 
-            this.colAvaibleTickets.DisplayIndex = 7;
-            this.colAvaibleTickets.Text = "Tickets left";
+            this.btnBuyPesetas.Location = new System.Drawing.Point(131, 271);
+            this.btnBuyPesetas.Name = "btnBuyPesetas";
+            this.btnBuyPesetas.Size = new System.Drawing.Size(179, 37);
+            this.btnBuyPesetas.TabIndex = 33;
+            this.btnBuyPesetas.Text = "Buy pesetas";
+            this.btnBuyPesetas.UseVisualStyleBackColor = true;
+            this.btnBuyPesetas.Click += new System.EventHandler(this.btnBuyPesetas_Click);
+            // 
+            // tbBuyPesetas
+            // 
+            this.tbBuyPesetas.Location = new System.Drawing.Point(18, 276);
+            this.tbBuyPesetas.Name = "tbBuyPesetas";
+            this.tbBuyPesetas.Size = new System.Drawing.Size(100, 26);
+            this.tbBuyPesetas.TabIndex = 34;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1201, 692);
+            this.ClientSize = new System.Drawing.Size(1201, 839);
+            this.Controls.Add(this.tbBuyPesetas);
+            this.Controls.Add(this.btnBuyPesetas);
             this.Controls.Add(this.cbCoupon);
             this.Controls.Add(this.btnLogOut);
             this.Controls.Add(this.groupBox1);
@@ -493,6 +513,8 @@
         private System.Windows.Forms.Button btnLogOut;
         private System.Windows.Forms.CheckBox cbCoupon;
         private System.Windows.Forms.ColumnHeader colAvaibleTickets;
+        private System.Windows.Forms.Button btnBuyPesetas;
+        private System.Windows.Forms.TextBox tbBuyPesetas;
     }
 }
 

@@ -12,3 +12,17 @@ C:\Users\david\Desktop\p\Piljetter\PiljetterUserClient\obj\Debug\PiljetterUserCl
 C:\Users\david\Desktop\p\Piljetter\PiljetterUserClient\obj\Debug\PiljetterUserClient.csproj.CopyComplete
 C:\Users\david\Desktop\p\Piljetter\PiljetterUserClient\obj\Debug\PiljetterUserClient.exe
 C:\Users\david\Desktop\p\Piljetter\PiljetterUserClient\obj\Debug\PiljetterUserClient.pdb
+C:\Users\90davlar\Desktop\asadd\Piljetter\PiljetterUserClient\bin\Debug\PiljetterUserClient.exe.config
+C:\Users\90davlar\Desktop\asadd\Piljetter\PiljetterUserClient\bin\Debug\PiljetterUserClient.exe
+C:\Users\90davlar\Desktop\asadd\Piljetter\PiljetterUserClient\bin\Debug\PiljetterUserClient.pdb
+C:\Users\90davlar\Desktop\asadd\Piljetter\PiljetterUserClient\bin\Debug\Dapper.dll
+C:\Users\90davlar\Desktop\asadd\Piljetter\PiljetterUserClient\bin\Debug\Dapper.xml
+C:\Users\90davlar\Desktop\asadd\Piljetter\PiljetterUserClient\obj\Debug\PiljetterUserClient.csprojAssemblyReference.cache
+C:\Users\90davlar\Desktop\asadd\Piljetter\PiljetterUserClient\obj\Debug\PiljetterUserClient.Login.resources
+C:\Users\90davlar\Desktop\asadd\Piljetter\PiljetterUserClient\obj\Debug\PiljetterUserClient.MainForm.resources
+C:\Users\90davlar\Desktop\asadd\Piljetter\PiljetterUserClient\obj\Debug\PiljetterUserClient.Properties.Resources.resources
+C:\Users\90davlar\Desktop\asadd\Piljetter\PiljetterUserClient\obj\Debug\PiljetterUserClient.SignUp.resources
+C:\Users\90davlar\Desktop\asadd\Piljetter\PiljetterUserClient\obj\Debug\PiljetterUserClient.csproj.GenerateResource.cache
+C:\Users\90davlar\Desktop\asadd\Piljetter\PiljetterUserClient\obj\Debug\PiljetterUserClient.csproj.CopyComplete
+C:\Users\90davlar\Desktop\asadd\Piljetter\PiljetterUserClient\obj\Debug\PiljetterUserClient.exe
+C:\Users\90davlar\Desktop\asadd\Piljetter\PiljetterUserClient\obj\Debug\PiljetterUserClient.pdb
