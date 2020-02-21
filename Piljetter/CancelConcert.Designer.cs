@@ -53,9 +53,9 @@
             // 
             this.btnCancel.Location = new System.Drawing.Point(186, 102);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.Size = new System.Drawing.Size(152, 23);
             this.btnCancel.TabIndex = 2;
-            this.btnCancel.Text = "Cancel";
+            this.btnCancel.Text = "Cancel concert";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
@@ -63,7 +63,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(282, 170);
+            this.ClientSize = new System.Drawing.Size(362, 208);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbConcertId);

@@ -86,6 +86,7 @@
       <DependentUpon>SignUp.cs</DependentUpon>
     </Compile>
     <Compile Include="Stage.cs" />
+    <Compile Include="Stats.cs" />
     <Compile Include="Ticket.cs" />
     <EmbeddedResource Include="AddArtist.resx">
       <DependentUpon>AddArtist.cs</DependentUpon>

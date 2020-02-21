@@ -113,18 +113,29 @@ namespace PiljetterUserClient
                 using (var conn = new SqlConnection(connStr))
                 {
                     conn.Open();
+                    //var sql = @"
+                    //        SELECT c.*, a.Name as ArtistName, cty.Name as Cityname, s.Name as StageName
+                    //        FROM Concert c
+                    //        INNER JOIN Artist a ON (a.Id = c.Artist_Id)
+                    //        INNER JOIN Stage s ON (s.Id = c.Stage_Id)
+                    //        INNER JOIN City cty ON (cty.Id = s.City_Id)
+                    //        WHERE (a.Name = @Artist OR @Artist = '')
+                    //        AND (s.Name = @Stage OR @Stage = '')
+                    //        AND (cty.Name = @City OR @City = '')
+                    //        AND (c.Date = @SpecificDate OR @SpecificDate IS NULL)
+                    //        AND (c.Date BETWEEN @DateFrom AND @DateTo OR (@DateFrom IS NULL OR @DateTo IS NULL))
+                    //        ";
+
+
                     var sql = @"
-                            SELECT c.*, a.Name as ArtistName, cty.Name as Cityname, s.Name as StageName
-                            FROM Concert c
-                            INNER JOIN Artist a ON (a.Id = c.Artist_Id)
-                            INNER JOIN Stage s ON (s.Id = c.Stage_Id)
-                            INNER JOIN City cty ON (cty.Id = s.City_Id)
-                            WHERE (a.Name = @Artist OR @Artist = '')
-                            AND (s.Name = @Stage OR @Stage = '')
-                            AND (cty.Name = @City OR @City = '')
-                            AND (c.Date = @SpecificDate OR @SpecificDate IS NULL)
-                            AND (c.Date BETWEEN @DateFrom AND @DateTo OR (@DateFrom IS NULL OR @DateTo IS NULL))
-                            ";
+                               SELECT TOP 100 * FROM searchResultConcert
+                               WHERE (ArtistName = @Artist OR @Artist = '')
+                               AND (StageName = @Stage OR @Stage = '')
+                               AND (Cityname = @City OR @City = '')
+                               AND (Date = @SpecificDate OR @SpecificDate IS NULL)
+                               AND (Date BETWEEN @DateFrom AND @DateTo OR (@DateFrom IS NULL OR @DateTo IS NULL))
+                                ";
+
                     var concerts = conn.Query<Concert>(sql, new
                     {
                         Artist = artist,
@@ -196,29 +207,42 @@ namespace PiljetterUserClient
                 using (var conn = new SqlConnection(connStr))
                 {
                     conn.Open();
-                    using (var t = conn.BeginTransaction())
-                    {
-                        var sql = "";
+                        var sql = @"SELECT s.MaxVisitors, c.AvaibleTickets
+                                FROM Concert c
+                                INNER JOIN Stage s ON c.Stage_Id = s.Id
+                                WHERE c.Id = @ConcertId";
+                        var ticketsLeft = conn.Query<Concert>(sql, new { ConcertId = tbConcertId.Text });
 
-                            if (cbCoupon.Checked)
+                    foreach (Concert c in ticketsLeft)
+                    {
+                        var limit = c.MaxVisitors * 0.1;
+                        if (c.AvaibleTickets <= limit)
+                        {
+
+                            using (var t = conn.BeginTransaction(IsolationLevel.Serializable))
                             {
-                                sql = @"
+
+
+
+                                if (cbCoupon.Checked)
+                                {
+                                    sql = @"
                                     SELECT * FROM TicketCoupon t WHERE t.Customer_Id = @CustomerId         
                                     ";
 
-                                var coupons = conn.Query(sql, new { CustomerId = logedInUser.Id }, transaction: t);
+                                    var coupons = conn.Query(sql, new { CustomerId = logedInUser.Id }, transaction: t);
 
-                                if (coupons.Count() > 0)
-                                {
-                                    sql = @"
+                                    if (coupons.Count() > 0)
+                                    {
+                                        sql = @"
                                         WITH sq AS 
                                         (
                                              SELECT c.Id AS CustomerId, con.Id AS ConcertId
                                              FROM Customer c, Concert con
                                              WHERE con.Id = @ConcertId AND c.Id = @CustomerId AND con.IsCanceled = 0
                                         )
-                                        INSERT INTO Ticket (Customer_Id, Concert_Id, Price)
-                                        SELECT sq.CustomerId, sq.ConcertId, 0
+                                        INSERT INTO Ticket (Customer_Id, Concert_Id)
+                                        SELECT sq.CustomerId, sq.ConcertId
                                         FROM sq;
                                         WITH tc AS 
                                         (
@@ -233,12 +257,12 @@ namespace PiljetterUserClient
                                         FROM Concert c
                                         WHERE c.Id = @ConcertId
                                         ";
+                                    }
                                 }
-                            }
 
-                            else
-                            {
-                                sql = @"
+                                else
+                                {
+                                    sql = @"
                                 WITH sq AS 
                                 (
                                       SELECT c.Id AS CustomerId, con.Id AS ConcertId
@@ -256,16 +280,93 @@ namespace PiljetterUserClient
                                 FROM Concert c
                                 WHERE c.Id = @ConcertId
                                 ";
+                                }
+                                conn.Execute(sql, new { ConcertId = tbConcertId.Text, CustomerId = logedInUser.Id }, transaction: t);
+
+
+                                t.Commit();
                             }
-                            conn.Execute(sql, new { ConcertId = tbConcertId.Text, CustomerId = logedInUser.Id }, transaction: t);
+                        }
+                        else
+                        {
+                            using (var t = conn.BeginTransaction())
+                            {
 
 
-                        t.Commit();
+
+                                if (cbCoupon.Checked)
+                                {
+                                    sql = @"
+                                    SELECT * FROM TicketCoupon t WHERE t.Customer_Id = @CustomerId         
+                                    ";
+
+                                    var coupons = conn.Query(sql, new { CustomerId = logedInUser.Id }, transaction: t);
+
+                                    if (coupons.Count() > 0)
+                                    {
+                                        sql = @"
+                                        WITH sq AS 
+                                        (
+                                             SELECT c.Id AS CustomerId, con.Id AS ConcertId
+                                             FROM Customer c, Concert con
+                                             WHERE con.Id = @ConcertId AND c.Id = @CustomerId AND con.IsCanceled = 0
+                                        )
+                                        INSERT INTO Ticket (Customer_Id, Concert_Id)
+                                        SELECT sq.CustomerId, sq.ConcertId
+                                        FROM sq;
+                                        WITH tc AS 
+                                        (
+                                        	SELECT TOP (1) *
+                                        	FROM TicketCoupon t
+                                        	WHERE t.Customer_Id = @CustomerId
+                                        	ORDER BY t.ExpiryDate
+                                        )
+                                        DELETE FROM tc
+                                        UPDATE c
+                                        SET c.AvaibleTickets = AvaibleTickets -1
+                                        FROM Concert c
+                                        WHERE c.Id = @ConcertId
+                                        ";
+                                    }
+                                }
+
+                                else
+                                {
+                                    sql = @"
+                                WITH sq AS 
+                                (
+                                      SELECT c.Id AS CustomerId, con.Id AS ConcertId
+                                      FROM Customer c, Concert con
+                                      WHERE con.Id = @ConcertId AND c.Id = @CustomerId AND con.IsCanceled = 0
+                                 )
+                                INSERT INTO Ticket (Customer_Id, Concert_Id, Price)
+                                SELECT sq.CustomerId, sq.ConcertId, (SELECT Pesetas FROM Concert WHERE Id = @ConcertId)
+                                FROM sq;
+                                UPDATE Customer
+                                SET Pesetas = Pesetas - (SELECT Pesetas FROM Concert WHERE Id = @ConcertId)
+                                WHERE Id = @CustomerId
+                                UPDATE c
+                                SET c.AvaibleTickets = AvaibleTickets -1
+                                FROM Concert c
+                                WHERE c.Id = @ConcertId
+                                ";
+                                }
+                                conn.Execute(sql, new { ConcertId = tbConcertId.Text, CustomerId = logedInUser.Id }, transaction: t);
+
+
+                                t.Commit();
+                            }
+
+
+                        }
+                            this.UpdateLoggedInUser();
                     }
 
+                    }
+                 
 
-                    this.UpdateLoggedInUser();
-                }
+
+                    
 
             }
             catch (SqlException ex)
@@ -282,6 +383,8 @@ namespace PiljetterUserClient
         }
         private void updateTicketsAndCoupons()
         {
+            listBoxCoupons.Items.Clear();
+            listBoxTickets.Items.Clear();
             using (var conn = new SqlConnection(connStr))
             {
                 conn.Open();

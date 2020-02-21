@@ -15,5 +15,7 @@ namespace PiljetterUserClient
         public string CityName { get; set; }
         public string StageName { get; set; }
         public int AvaibleTickets { get; set; }
+        public int MaxVisitors { get; set; }
+
     }
 }

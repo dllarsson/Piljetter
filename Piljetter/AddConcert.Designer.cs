@@ -34,8 +34,6 @@
             this.btnAddConcert = new System.Windows.Forms.Button();
             this.listBoxArtist = new System.Windows.Forms.ListBox();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.tbTicketPrice = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tbConcertName = new System.Windows.Forms.TextBox();
             this.btnAddArtist = new System.Windows.Forms.Button();
@@ -93,22 +91,6 @@
             this.dateTimePicker1.Size = new System.Drawing.Size(169, 20);
             this.dateTimePicker1.TabIndex = 5;
             // 
-            // tbTicketPrice
-            // 
-            this.tbTicketPrice.Location = new System.Drawing.Point(477, 116);
-            this.tbTicketPrice.Name = "tbTicketPrice";
-            this.tbTicketPrice.Size = new System.Drawing.Size(168, 20);
-            this.tbTicketPrice.TabIndex = 6;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(476, 100);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(66, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Ticket price:";
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -154,8 +136,6 @@
             this.Controls.Add(this.btnAddArtist);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.tbConcertName);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.tbTicketPrice);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.listBoxArtist);
             this.Controls.Add(this.btnAddConcert);
@@ -178,8 +158,6 @@
         private System.Windows.Forms.Button btnAddConcert;
         private System.Windows.Forms.ListBox listBoxArtist;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.TextBox tbTicketPrice;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbConcertName;
         private System.Windows.Forms.Button btnAddArtist;

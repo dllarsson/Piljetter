@@ -14,8 +14,11 @@ namespace Piljetter
 {
     public partial class AddConcert : Form
     {
-        public AddConcert()
+        public MainForm M { get; set; }
+        public AddConcert(MainForm main)
         {
+
+            M = main;
             InitializeComponent();
         }
 
@@ -27,25 +30,40 @@ namespace Piljetter
                     using (var c = new SqlConnection(MainForm.connStr))
                     {
                         c.Open();
-                        var sql = @"
-                        INSERT INTO Concert ([Name], [Date], [Stage_Id], [Artist_Id], Pesetas, AvaibleTickets) 
-                        VALUES (@Name, @date, (SELECT Id FROM Stage WHERE Name = @StageName), 
-                               (SELECT Id FROM Artist WHERE Name = @ArtistName), @Pesetas, (SELECT MaxVisitors
-                                                                                            FROM Stage
-                                                                                            WHERE Id = (SELECT Id 
-                                                                                                        FROM Stage 
-                                                                                                        WHERE Name = @StageName)));";
+                    var sql = @"
+                            WITH cte AS 
+                            (
+	                            SELECT (((a.Popularity * s.StageQuality) * s.MaxVisitors) / s.MaxVisitors) * 1.5 AS TicketPrice, a.Id AS ArtistId, s.Id AS StageId, s.MaxVisitors AS MaxVisitors
+	                            FROM Artist a, Stage s
+	                            WHERE a.Name = @ArtistName AND s.Name = @StageName
+
+                            )
+                            INSERT INTO Concert (Name, Date, Stage_Id, Artist_Id, Pesetas, AvaibleTickets)
+                            SELECT @Name, @date, c.StageId, c.ArtistId, c.TicketPrice, c.MaxVisitors
+                            FROM cte c
+                                ";
+
+
+
+                        //Gammla insert concert
+
+                        //INSERT INTO Concert ([Name], [Date], [Stage_Id], [Artist_Id], Pesetas, AvaibleTickets) 
+                        //VALUES (@Name, @date, (SELECT Id FROM Stage WHERE Name = @StageName), 
+                        //       (SELECT Id FROM Artist WHERE Name = @ArtistName), @Pesetas, (SELECT MaxVisitors
+                        //                                                                    FROM Stage
+                        //                                                                    WHERE Id = (SELECT Id 
+                        //                                                                                FROM Stage 
+                        //                                                                                WHERE Name = @StageName)));";
                         c.Execute(sql, new
                         {
                             Name = tbConcertName.Text,
                             date = dateTimePicker1.Value.Date,
                             StageName = listBoxStage.SelectedItem,
                             ArtistName = listBoxArtist.SelectedItem,
-                            Pesetas = tbTicketPrice.Text
                         }); ;
                         MessageBox.Show("Concert was succesfully added!");
-                        tbTicketPrice.Text = "";
                         tbConcertName.Text = "";
+                    M.UpdateForm();
                     }
 
                 }
